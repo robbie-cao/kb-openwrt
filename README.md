@@ -65,7 +65,7 @@ The parameter V=x specifies level of messages in the process of the build.
 The OpenWrt build system is a set of Makefiles and patches that allows users to easily
 generate both a cross-compilation toolchain and a root filesystem for embedded systems.
 
-Build System Features:
+### Build System Features
 - Makes it easy to port software
 - Uses kconfig (Linux Kernel menuconfig) for configuration of features
 - Provides integrated cross-compiler toolchain (gcc, ld, ...)
@@ -73,7 +73,7 @@ Build System Features:
 - Handles standard download, patch, configure, compile and packaging workflow
 - Provides a number of common fixups for badly behaving packages
 
-Make Targets:
+### Make Targets
 - Offers a number of high level make targets for standard package workflows
 - Targets always in the format "component/name/action", e.g. "toolchain/gdb/compile" or "package/mtd/install"
 - Prepare a package source tree: package/foo/prepare
@@ -88,25 +88,52 @@ Make Targets:
   make[4] -C target/utils prepare
 ```
 
-Build Sequence:
-- tools - automake, autoconf, sed, cmake
-- toolchain/binutils - as, ld, ...
-- toolchain/gcc - gcc, g++, cpp, ...
-- target/linux - kernel modules
-- package - core and feed packages
-- target/linux - kernel image
-- target/linux/image - firmware image file generation
-
 > https://wiki.openwrt.org/about/toolchain
 
+### Build Sequence
+```
+tools - automake, autoconf, sed, cmake
+toolchain/binutils - as, ld, ...
+toolchain/gcc - gcc, g++, cpp, ...
+target/linux - kernel modules
+package - core and feed packages
+target/linux - kernel image
+target/linux/image - firmware image file generation
+```
 
-> https://forum.openwrt.org/viewtopic.php?pid=31794#p31794
+### Make Sequence
+
+Top command make world calls the following sequence of the commands:
+```
+make target/compile
+make package/cleanup
+make package/compile
+make package/install
+make package/preconfig
+make target/install
+make package/index
+```
+
+You may run each command independency. For example, if the process of compilation of packages stops on error, you may fix the problem and next continue without cleanup:
+```
+make package/compile
+make package/install
+make package/preconfig
+make target/install
+make package/index
+```
+
+> https://wiki.openwrt.org/doc/techref/buildroot
+
+### Notes About Buildroot / SDK
 
 The OpenWrt project provides **two** main ways to get your software compiled for and running on an OpenWrt device.
 - The first option is to download and build the complete toolchain (buildroot)
 - The second is to download and/or build the SDK, a stripped down version of the toolchain intended to only build packages, and not firmware images.
 
 > https://github.com/MagnusS/p2p-dprd/wiki/BuildingOpenWrtPackages
+
+> https://forum.openwrt.org/viewtopic.php?pid=31794#p31794
 
 ## Makefile
 
