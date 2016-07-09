@@ -54,3 +54,12 @@ OpenWrt's objectives:
 
 ## Misc
 
+## Resources
+
+- [OpenWrt Wiki](https://wiki.openwrt.org)
+- [OpenWrt Developer](https://wiki.openwrt.org/doc/playground/developer)
+- [OpenWrt Development Center](https://dev.openwrt.org)
+- [OpenWrt HOWTOs](https://wiki.openwrt.org/doc/howto/start)
+- [OpenWrt Git Repository](https://git.openwrt.org)
+- [OpenWrt GitHub](https://github.com/openwrt)
+
