@@ -49,8 +49,64 @@ Attitude Adjustment | 态度调整    | 12.09      |
 $ ./scripts/feeds update -a
 $ ./scripts/feeds install -a
 $ make menuconfig           # config target options for most cases
-$ make [-jN]                # -jN optional, N is the number of cpu cores
+$ make [-jN] [V=scw]        # -jN optional, N is the number of cpu cores, V=s/c/w for warning, errors and tracing
+
+The parameter V=x specifies level of messages in the process of the build.
+    V=99 and V=1 are now deprecated in favor of a new verbosity class system,
+    though the old flags are still supported.
+    You can set the V variable on the command line (or OPENWRT_VERBOSE in the
+    environment) to one or more of the following characters:
+
+    - s: stdout+stderr (equal to the old V=99)
+    - c: commands (for build systems that suppress commands by default, e.g. kbuild, cmake)
+    - w: warnings/errors only (equal to the old V=1)
 ```
+
+The OpenWrt build system is a set of Makefiles and patches that allows users to easily
+generate both a cross-compilation toolchain and a root filesystem for embedded systems.
+
+Build System Features:
+- Makes it easy to port software
+- Uses kconfig (Linux Kernel menuconfig) for configuration of features
+- Provides integrated cross-compiler toolchain (gcc, ld, ...)
+- Provides abstraction for autotools (automake, autoconf), cmake, scons
+- Handles standard download, patch, configure, compile and packaging workflow
+- Provides a number of common fixups for badly behaving packages
+
+Make Targets:
+- Offers a number of high level make targets for standard package workflows
+- Targets always in the format "component/name/action", e.g. "toolchain/gdb/compile" or "package/mtd/install"
+- Prepare a package source tree: package/foo/prepare
+- Compile a package: package/foo/compile
+- Clean a package: package/foo/clean
+
+```
+  make[2] toolchain/install
+  make[3] -C toolchain install
+  make[2] target/compile
+  make[3] -C target compile
+  make[4] -C target/utils prepare
+```
+
+Build Sequence:
+- tools - automake, autoconf, sed, cmake
+- toolchain/binutils - as, ld, ...
+- toolchain/gcc - gcc, g++, cpp, ...
+- target/linux - kernel modules
+- package - core and feed packages
+- target/linux - kernel image
+- target/linux/image - firmware image file generation
+
+> https://wiki.openwrt.org/about/toolchain
+
+
+> https://forum.openwrt.org/viewtopic.php?pid=31794#p31794
+
+The OpenWrt project provides **two** main ways to get your software compiled for and running on an OpenWrt device.
+- The first option is to download and build the complete toolchain (buildroot)
+- The second is to download and/or build the SDK, a stripped down version of the toolchain intended to only build packages, and not firmware images.
+
+> https://github.com/MagnusS/p2p-dprd/wiki/BuildingOpenWrtPackages
 
 ## Makefile
 
