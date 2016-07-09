@@ -31,13 +31,13 @@ OpenWrt's objectives:
 
 ## Branch
 
-Code Name           | Version    | Status
-------------------- | ---------- | --------------
-Designated Driver   | developing | trunk
-Chaos Calmer        | 15.05.1    | current stable
-Chaos Calmer        | 15.05      |
-Barrier Breaker     | 14.07      |
-Attitude Adjustment | 12.09      |
+Code Name           | Translation | Version    | Status
+------------------- | ----------- | ---------- | --------------
+Designated Driver   | 代驾司机    | developing | trunk
+Chaos Calmer        | 混乱平息者  | 15.05.1    | current stable
+Chaos Calmer        |             | 15.05      |
+Barrier Breaker     | 阻碍破除人  | 14.07      |
+Attitude Adjustment | 态度调整    | 12.09      |
 
 > https://wiki.openwrt.org/about/history
 >
