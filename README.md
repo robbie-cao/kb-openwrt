@@ -32,6 +32,7 @@ OpenWrt's objectives:
 ## Branch
 
 Code Name           | Version    | Status
+------------------- | ---------- | --------------
 Designated Driver   | developing | trunk
 Chaos Calmer        | 15.05.1    | current stable
 Chaos Calmer        | 15.05      |
@@ -39,7 +40,8 @@ Barrier Breaker     | 14.07      |
 Attitude Adjustment | 12.09      |
 
 > https://wiki.openwrt.org/about/history
->://en.wikipedia.org/wiki/OpenWrt#History
+>
+> https://en.wikipedia.org/wiki/OpenWrt#History
 
 ## Build
 
