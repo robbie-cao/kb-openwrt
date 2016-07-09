@@ -135,7 +135,36 @@ The OpenWrt project provides **two** main ways to get your software compiled for
 
 > https://forum.openwrt.org/viewtopic.php?pid=31794#p31794
 
-## Makefile
+## Buildroot
+
+![OpenWrt Buildroot Source Tree](images/openwrt_buildroot_source_tree.png)
+
+> The folders in the second lines are generated during compilation.
+
+- **tools** - contains all the build instructions to fetch the image building tools
+- **toolchain** - contains all the build instructions to fetch the kernel headers, the C library, the bin-utils, the compiler itself and the debugger. If you add a completely new architecture, you would add a configuration for the C library here.
+- **target** - build instruction for firmware image generating process and for the kernel building process; compiles kernel and firmware image utilities, builds firmware image, generate Image Generator (former called Image Builder)
+- **package** -  the OpenWrt Makefiles and patches for all the main packages. The OpenWrt Makefile has its own syntax, different from the conventional Makefile of Linux make tool. The OpenWrt Make file defines the meta information of the package, where to download the package, how to compile, where to installed the compiled binaries, etc. See How to Build OpenWrt Application Package for more detail.
+- **include** -
+- **scripts** -  perl scripts that does the OpenWrt package management
+- **dl** - Where the user-space package tarballs will be downloaded
+- **build_dir** - where all user-space tools will be cross-compiled
+- **staging_dir** -  where the cross-compilation tools will be installed
+- **feeds** -
+- **bin** -  where the firmware image will be generated and all the .ipk package files will be generated
+
+
+Simply speaking, once the OpenWrt buildroot has been properly configured, e.g. 
+the target platform and architecture is specified, user-space packages selected, etc., the OpenWrt
+Buildroot will do the image building through the following steps (once the configuration is done):
+1. Download the cross-compilation tools, kernel headers, etc. and
+2. Set up the staging directory (staging_dir /). This is where the cross-compilation toolchain will be installed. If you want to use the same cross-compilation toolchain for other purposes, such as compiling third-party applications, you can find the cross-compiler tools in this directory, and then use arch-linux-gcc to compile your application.
+3. Create the download directory (dl/ by default). This is where the tarballs will be downloaded.
+4. Create the build directory (build_dir/). This is where all user-space tools while be compiled.
+5. Create the target directory (build_dir/target-arch/root by default) and the target filesystem skeleton. This directory will contain the final root filesystem.
+6. Install the user-space packages to the root file system and compress the whole root file system with proper format. The result firmware image is generated in bin/
+
+> http://www.ccs.neu.edu/home/noubir/Courses/CS6710/S12/material/OpenWrt_Dev_Tutorial.pdf
 
 ## Concept
 
