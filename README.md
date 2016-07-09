@@ -137,6 +137,9 @@ The OpenWrt project provides **two** main ways to get your software compiled for
 
 ## Buildroot
 
+
+### Overview
+
 ![OpenWrt Buildroot Source Tree](images/openwrt_buildroot_source_tree.png)
 
 > The folders in the second lines are generated during compilation.
@@ -165,6 +168,10 @@ Buildroot will do the image building through the following steps (once the confi
 6. Install the user-space packages to the root file system and compress the whole root file system with proper format. The result firmware image is generated in bin/
 
 > http://www.ccs.neu.edu/home/noubir/Courses/CS6710/S12/material/OpenWrt_Dev_Tutorial.pdf
+
+### Principle
+
+![Embedded Linux Build Systrem Principle](images/buildroot_principle.png)
 
 ## Concept
 
