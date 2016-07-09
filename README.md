@@ -45,6 +45,13 @@ Attitude Adjustment | 态度调整    | 12.09      |
 
 ## Build
 
+```
+$ ./scripts/feeds update -a
+$ ./scripts/feeds install -a
+$ make menuconfig           # config target options for most cases
+$ make [-jN]                # -jN optional, N is the number of cpu cores
+```
+
 ## Makefile
 
 ## Concept
