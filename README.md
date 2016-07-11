@@ -798,6 +798,361 @@ package/reg
 
 ## Misc
 
+### Kernel Build Sequence
+
+**download**
+
+```
+mkdir -p /home/robbie/GitHub/widora/dl
+/home/robbie/GitHub/widora/scripts/download.pl "/home/robbie/GitHub/widora/dl" "linux-3.18.29.tar.xz" "b25737a0bc98e80d12200de93f239c28" "" "@KERNEL/linux/kernel/v3.x"
+--2016-07-07 23:42:35--  ftp://ftp.all.kernel.org/pub/linux/kernel/v3.x/linux-3.18.29.tar.xz
+=> '-'
+Resolving ftp.all.kernel.org (ftp.all.kernel.org)... 199.204.44.194, 198.145.20.140, 149.20.4.69
+Connecting to ftp.all.kernel.org (ftp.all.kernel.org)|199.204.44.194|:21... connected.
+Logging in as anonymous ... Logged in!
+==> SYST ... done.    ==> PWD ... done.
+==> TYPE I ... done.  ==> CWD (1) /pub/linux/kernel/v3.x ... done.
+==> SIZE linux-3.18.29.tar.xz ... 81044012
+==> PASV ... done.    ==> RETR linux-3.18.29.tar.xz ... done.
+Length: 81044012 (77M) (unauthoritative)
+```
+
+**extract**
+
+```
+xzcat /home/robbie/GitHub/widora/dl/linux-3.18.29.tar.xz | tar -C /home/robbie/GitHub/widora/build_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2 -xf -
+```
+
+**patch**
+
+```
+rm -rf /home/robbie/GitHub/widora/build_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/linux-3.18.29/patches; mkdir -p /home/robbie/GitHub/widora/build_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/linux-3.18.29/patches
+cp -fpR "/home/robbie/GitHub/widora/target/linux/generic/files"/. /home/robbie/GitHub/widora/build_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/linux-3.18.29/
+
+find /home/robbie/GitHub/widora/build_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/linux-3.18.29/ -name \*.rej -or -name \*.orig | xargs -r rm -f
+
+Applying /home/robbie/GitHub/widora/target/linux/generic/patches-3.18/000-keep_initrafs_the_default.patch using plaintext: 
+patching file init/do_mounts.c
+
+Applying /home/robbie/GitHub/widora/target/linux/generic/patches-3.18/020-ssb_update.patch using plaintext: 
+patching file drivers/ssb/pcihost_wrapper.c
+patching file drivers/ssb/driver_pcicore.c
+patching file drivers/ssb/main.c
+
+Applying /home/robbie/GitHub/widora/target/linux/generic/patches-3.18/021-ssb_sprom.patch using plaintext: 
+patching file include/linux/ssb/ssb.h
+
+...
+...
+
+Applying /home/robbie/GitHub/widora/target/linux/generic/patches-3.18/999-seccomp_log.patch using plaintext: 
+patching file kernel/seccomp.c
+patching file include/uapi/linux/seccomp.h
+touch /home/robbie/GitHub/widora/build_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/linux-3.18.29/.quilt_used
+```
+
+**configure**
+
+```
+/home/robbie/GitHub/widora/scripts/kconfig.pl  + /home/robbie/GitHub/widora/target/linux/generic/config-3.18 /home/robbie/GitHub/widora/target/linux/ramips/mt7688/config-3.18 > /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config.target
+awk '/^(#[[:space:]]+)?CONFIG_KERNEL/{sub("CONFIG_KERNEL_","CONFIG_");print}' /home/robbie/GitHub/widora/.config >> /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config.target
+echo "# CONFIG_KALLSYMS_EXTRA_PASS is not set" >> /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config.target
+echo "# CONFIG_KALLSYMS_ALL is not set" >> /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config.target
+echo "# CONFIG_KALLSYMS_UNCOMPRESSED is not set" >> /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config.target
+/home/robbie/GitHub/widora/scripts/metadata.pl kconfig /home/robbie/GitHub/widora/tmp/.packageinfo /home/robbie/GitHub/widora/.config 3.18 > /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config.override
+/home/robbie/GitHub/widora/scripts/kconfig.pl 'm+' '+' /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config.target /dev/null /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config.override > /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config
+mv /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config.old
+...
+...
+```
+
+**build**
+
+```
+make -C /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29 HOSTCFLAGS="-O2 -I/home/robbie/GitHub/widora/staging_dir/host/include -I/home/robbie/GitHub/widora/staging_dir/host/usr/include -Wall -Wmissing-prototype
+s -Wstrict-prototypes" CROSS_COMPILE="mipsel-openwrt-linux-uclibc-" ARCH="mips" KBUILD_HAVE_NLS=no CONFIG_SHELL="bash" V=1 CC="mipsel-openwrt-linux-uclibc-gcc" modules
+make -f ./Makefile silentoldconfig
+make -f ./scripts/Makefile.build obj=scripts/basic
+make -f ./scripts/Makefile.build obj=scripts/kconfig silentoldconfig
+make -f ./scripts/Makefile.asm-generic \
+make -f ./scripts/Makefile.asm-generic \
+make -f ./scripts/Makefile.build obj=scripts/basic
+make -f ./scripts/Makefile.build obj=.
+make -f ./scripts/Makefile.build obj=scripts
+make -f ./scripts/Makefile.build obj=scripts/dtc
+make -f ./scripts/Makefile.build obj=scripts/mod
+make -f ./scripts/Makefile.build obj=init
+make -f ./scripts/Makefile.build obj=usr
+make -f ./scripts/Makefile.build obj=arch/mips/ralink
+make -f ./scripts/Makefile.build obj=arch/mips
+make -f ./scripts/Makefile.build obj=arch/mips/kernel
+make -f ./scripts/Makefile.build obj=arch/mips/mm
+make -f ./scripts/Makefile.build obj=arch/mips/net
+make -f ./scripts/Makefile.build obj=kernel
+make -f ./scripts/Makefile.build obj=kernel/bpf
+make -f ./scripts/Makefile.build obj=kernel/irq
+make -f ./scripts/Makefile.build obj=kernel/locking
+make -f ./scripts/Makefile.build obj=kernel/power
+make -f ./scripts/Makefile.build obj=kernel/printk
+make -f ./scripts/Makefile.build obj=kernel/rcu
+make -f ./scripts/Makefile.build obj=kernel/sched
+make -f ./scripts/Makefile.build obj=kernel/time
+make -f ./scripts/Makefile.build obj=mm
+make -f ./scripts/Makefile.build obj=fs
+make -f ./scripts/Makefile.build obj=fs/autofs4
+make -f ./scripts/Makefile.build obj=fs/debugfs
+make -f ./scripts/Makefile.build obj=fs/devpts
+make -f ./scripts/Makefile.build obj=fs/exofs
+make -f ./scripts/Makefile.build obj=fs/fat
+make -f ./scripts/Makefile.build obj=fs/jffs2
+make -f ./scripts/Makefile.build obj=fs/kernfs
+make -f ./scripts/Makefile.build obj=fs/nls
+...
+...
+```
+
+
+```
+LD      vmlinux
++ vmlinux_link .tmp_kallsyms2.o vmlinux
++ local lds=./arch/mips/kernel/vmlinux.lds
++ '[' mips '!=' um ']'
++ mipsel-openwrt-linux-uclibc-ld -m elf32ltsmip -G 0 -static -n -nostdlib --gc-sections --build-id -X -o vmlinux -T ./arch/mips/kernel/vmlinux.lds arch/mips/kernel/head.o init/built-in.o --start-group usr/built-in.o arch/mips/ralink/built-in.o arch/mips/built-in.o kernel/built-in.o mm/built-in.o fs/built-in.o ipc/built-in.o security/built-in.o crypto/built-in.o block/built-in.o lib/lib.a arch/mips/fw/lib/lib.a arch/mips/lib/lib.a arch/mips/math-emu/lib.a lib/built-in.o arch/mips/fw/lib/built-in.o arch/mips/lib/built-in.o arch/mips/math-emu/built-in.o drivers/built-in.o sound/built-in.o firmware/built-in.o arch/mips/pci/built-in.o net/built-in.o --end-group .tmp_kallsyms2.o
++ '[' -n y ']'
++ info SORTEX vmlinux
++ '[' '' '!=' silent_ ']'
++ printf '  %-7s %s\n' SORTEX vmlinux
+	SORTEX  vmlinux
++ sortextable vmlinux
++ ./scripts/sortextable vmlinux
++ info SYSMAP System.map
++ '[' '' '!=' silent_ ']'
++ printf '  %-7s %s\n' SYSMAP System.map
+	SYSMAP  System.map
++ mksysmap vmlinux System.map
++ bash ./scripts/mksysmap vmlinux System.map
+```
+
+```
+mipsel-openwrt-linux-uclibc-objcopy -O binary -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/vmlinux /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux
+mipsel-openwrt-linux-uclibc-objcopy -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/vmlinux /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux.elf
+cp -fpR /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/vmlinux /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux.debug
+touch /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.image
+```
+
+**install**
+
+```
+install -d -m0755 /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/root-ramips/tmp /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/root-ramips/overlay
+chmod 1777 /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/root-ramips/tmp
+cp /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux.elf /home/robbie/GitHub/widora/bin/ramips/openwrt-ramips-mt7688-vmlinux.elf
+cp /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux /home/robbie/GitHub/widora/bin/ramips/openwrt-ramips-mt7688-vmlinux.bin
+/home/robbie/GitHub/widora/staging_dir/host/bin/lzma e /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux -lc1 -lp2 -pb2 /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux.bin.lzma
+
+LZMA 4.65 : Igor Pavlov : Public domain : 2009-02-03
+mkimage -A mips -O linux -T kernel -C lzma -a 0x80000000 -e 0x80000000 -n "MIPS OpenWrt Linux-3.18.29" -d /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux.bin.lzma /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/uImage.lzma
+Image Name:   MIPS OpenWrt Linux-3.18.29
+Created:      Mon Jul 11 17:03:33 2016
+Image Type:   MIPS Linux Kernel Image (lzma compressed)
+Data Size:    1152097 Bytes = 1125.09 kB = 1.10 MB
+Load Address: 80000000
+Entry Point:  80000000
+cp /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/uImage.lzma /home/robbie/GitHub/widora/bin/ramips/openwrt-ramips-mt7688-uImage.bin
+/home/robbie/GitHub/widora/staging_dir/host/bin/mksquashfs4 /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/root-ramips /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/root.squashfs -nopad -noappend -root-owned -comp xz -Xpreset 9 -Xe -Xlc 0 -Xlp 2 -Xpb 2  -b 256k -p '/dev d 755 0 0' -p '/dev/console c 600 0 0 5 1' -processors 1
+Pseudo file "/dev" exists in source filesystem "/home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/root-ramips/dev".
+Ignoring, exclude it (-e/-ef) to override.
+Parallel mksquashfs: Using 1 processor
+Creating 4.0 filesystem on /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/root.squashfs, block size 262144.
+
+[=======|                                                        ] 100/813  12%
+[===============-                                                ] 200/813  24%
+[=======================\                                        ] 300/813  36%
+[==============================/                                 ] 400/813  49%
+[======================================|                         ] 500/813  61%
+[==============================================|                 ] 600/813  73%
+[======================================================|         ] 700/813  86%
+[=============================================================/  ] 800/813  98%
+[===============================================================/] 813/813 100%
+Exportable Squashfs 4.0 filesystem, xz compressed, data block size 262144
+compressed data, compressed metadata, compressed fragments, no xattrs
+duplicates are removed
+Filesystem size 4008.73 Kbytes (3.91 Mbytes)
+30.30% of uncompressed filesystem size (13231.71 Kbytes)
+Inode table size 9246 bytes (9.03 Kbytes)
+24.85% of uncompressed inode table size (37209 bytes)
+Directory table size 11230 bytes (10.97 Kbytes)
+49.62% of uncompressed directory table size (22630 bytes)
+Number of duplicate files found 6
+Number of inodes 1112
+Number of files 797
+Number of fragments 34
+Number of symbolic links  228
+Number of device nodes 1
+Number of fifo nodes 0
+Number of socket nodes 0
+Number of directories 86
+Number of ids (unique uids + gids) 1
+Number of uids 1
+root (0)
+Number of gids 1
+root (0)
+dd if=/home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/root.squashfs of=/home/robbie/GitHub/widora/bin/ramips/openwrt-ramips-mt7688-root.squashfs bs=128k conv=sync
+31+1 records in
+32+0 records out
+4194304 bytes (4.2 MB) copied, 0.00379955 s, 1.1 GB/s
+cp /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux-Widora
+/home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/scripts/dtc/dtc -O dtb -o /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/Widora.dtb ../dts/Widora.dts
+/home/robbie/GitHub/widora/staging_dir/host/bin/patch-dtb /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux-Widora /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/Widora.dtb
+/home/robbie/GitHub/widora/staging_dir/host/bin/lzma e /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux-Widora -lc1 -lp2 -pb2 /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux-Widora.bin.lzma
+
+LZMA 4.65 : Igor Pavlov : Public domain : 2009-02-03
+mkimage -A mips -O linux -T kernel -C lzma -a 0x80000000 -e 0x80000000 -n "MIPS OpenWrt Linux-3.18.29" -d /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux-Widora.bin.lzma /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux-Widora.uImage
+Image Name:   MIPS OpenWrt Linux-3.18.29
+Created:      Mon Jul 11 17:03:41 2016
+Image Type:   MIPS Linux Kernel Image (lzma compressed)
+Data Size:    1153721 Bytes = 1126.68 kB = 1.10 MB
+Load Address: 80000000
+Entry Point:  80000000
+cat /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux-Widora.uImage /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/root.squashfs > /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/openwrt-ramips-mt7688-Widora-squashfs-sysupgrade.bin
+/home/robbie/GitHub/widora/staging_dir/host/bin/padjffs2 /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/openwrt-ramips-mt7688-Widora-squashfs-sysupgrade.bin 4 8 16 64 128 256
+padding image to 00504000
+padding image to 00510000
+padding image to 00520000
+padding image to 00540000
+if [ `stat -c%s "/home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/openwrt-ramips-mt7688-Widora-squashfs-sysupgrade.bin"` -gt 16121856 ]; then echo "Warning: /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/openwrt-ramips-mt7688-Widora-squashfs-sysupgrade.bin is too big" >&2; else cp -fpR /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/openwrt-ramips-mt7688-Widora-squashfs-sysupgrade.bin /home/robbie/GitHub/widora/bin/ramips/openwrt-ramips-mt7688-Widora-squashfs-sysupgrade.bin; fi
+( cd /home/robbie/GitHub/widora/bin/ramips ; find -maxdepth 1 -type f \! -name 'md5sums'  -printf "%P\n" | sort | xargs md5sum --binary > md5sums )
+( cd /home/robbie/GitHub/widora/bin/ramips ; find -maxdepth 1 -type f \! -name 'md5sums'  -printf "%P\n" | sort | xargs openssl dgst -sha256 > sha256sums )
+make[5]: Leaving directory `/home/robbie/GitHub/widora/target/linux/ramips/image'
+make[4]: Leaving directory `/home/robbie/GitHub/widora/target/linux/ramips'
+make[3]: Leaving directory `/home/robbie/GitHub/widora/target/linux'
+make[2]: Leaving directory `/home/robbie/GitHub/widora'
+export MAKEFLAGS= ;make -w -r package/index
+make[2]: Entering directory `/home/robbie/GitHub/widora'
+Generating package index...
+Generating index for package ./base-files_157.2-r49389_ramips_24kec.ipk
+Generating index for package ./busybox_1.23.2-1_ramips_24kec.ipk
+Generating index for package ./dnsmasq_2.73-1_ramips_24kec.ipk
+Generating index for package ./dropbear_2015.67-1_ramips_24kec.ipk
+Generating index for package ./firewall_2015-07-27_ramips_24kec.ipk
+Generating index for package ./fstools_2016-01-10-96415afecef35766332067f4205ef3b2c7561d21_ramips_24kec.ipk
+Generating index for package ./hostapd-common_2015-03-25-1_ramips_24kec.ipk
+Generating index for package ./ip6tables_1.4.21-1_ramips_24kec.ipk
+Generating index for package ./iptables_1.4.21-1_ramips_24kec.ipk
+Generating index for package ./iwinfo_2015-06-01-ade8b1b299cbd5748db1acf80dd3e9f567938371_ramips_24kec.ipk
+Generating index for package ./jshn_2015-11-08-10429bccd0dc5d204635e110a7a8fae7b80d16cb_ramips_24kec.ipk
+Generating index for package ./jsonfilter_2014-06-19-cdc760c58077f44fc40adbbe41e1556a67c1b9a9_ramips_24kec.ipk
+Generating index for package ./kmod-ac97_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-dma-buf_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-drv_regopt_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-fs-autofs4_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-fs-vfat_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-gpio-button-hotplug_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-i2c-core_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-i2c-ralink_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-input-core_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-ip6tables_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-ipt-conntrack_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-ipt-core_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-ipt-nat_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-ipv6_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-leds-gpio_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-ledtrig-netdev_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-lib-crc-ccitt_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-lib-lzo_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-mmc_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-nf-conntrack6_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-nf-conntrack_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-nf-ipt6_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-nf-ipt_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-nf-nat_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-nf-nathelper_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-nls-base_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-nls-cp437_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-nls-iso8859-1_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-nls-utf8_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-ppp_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-pppoe_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-pppox_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-regmap_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-scsi-core_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-sdhci-mt7620_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-sdhci_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-slhc_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-sound-core_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-sound-mtk_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-sound-soc-core_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-usb-core_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-usb-ohci_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-usb-storage_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-usb2_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-video-core_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-video-uvc_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./kmod-video-videobuf2_3.18.29-1_ramips_24kec.ipk
+Generating index for package ./libblobmsg-json_2015-11-08-10429bccd0dc5d204635e110a7a8fae7b80d16cb_ramips_24kec.ipk
+Generating index for package ./libgcc_4.8-linaro-1_ramips_24kec.ipk
+Generating index for package ./libip4tc_1.4.21-1_ramips_24kec.ipk
+Generating index for package ./libip6tc_1.4.21-1_ramips_24kec.ipk
+Generating index for package ./libiwinfo_2015-06-01-ade8b1b299cbd5748db1acf80dd3e9f567938371_ramips_24kec.ipk
+Generating index for package ./libjson-c_0.12-1_ramips_24kec.ipk
+Generating index for package ./libjson-script_2015-11-08-10429bccd0dc5d204635e110a7a8fae7b80d16cb_ramips_24kec.ipk
+Generating index for package ./libncurses_5.9-2_ramips_24kec.ipk
+Generating index for package ./libnl-tiny_0.1-4_ramips_24kec.ipk
+Generating index for package ./libopenssl_1.0.2h-1_ramips_24kec.ipk
+Generating index for package ./libpthread_0.9.33.2-1_ramips_24kec.ipk
+Generating index for package ./librt_0.9.33.2-1_ramips_24kec.ipk
+Generating index for package ./libubox_2015-11-08-10429bccd0dc5d204635e110a7a8fae7b80d16cb_ramips_24kec.ipk
+Generating index for package ./libubus_2015-05-25-f361bfa5fcb2daadf3b160583ce665024f8d108e_ramips_24kec.ipk
+Generating index for package ./libuci_2015-08-27.1-1_ramips_24kec.ipk
+Generating index for package ./libxtables_1.4.21-1_ramips_24kec.ipk
+Generating index for package ./logd_2015-11-22-c086167a0154745c677f8730a336ea9cf7d71031_ramips_24kec.ipk
+Generating index for package ./maccalc_1_ramips_24kec.ipk
+Generating index for package ./mountd_2015-11-22-8476a03b25d457e99f59e6372b8d9faebe2266f8_ramips_24kec.ipk
+Generating index for package ./mtd_21_ramips_24kec.ipk
+Generating index for package ./mtk-sdk-wifi_2015-06-01-ade8b1b299cbd5748db1acf80dd3e9f567938371_ramips_24kec.ipk
+Generating index for package ./netifd_2015-12-16-245527193e90906451be35c2b8e972b8712ea6ab_ramips_24kec.ipk
+Generating index for package ./odhcp6c_2015-07-29-dc186d6d2b0dd4ad23ca5fc69c00e81f796ff6d9_ramips_24kec.ipk
+Generating index for package ./odhcpd_2015-11-19-01d3f9d64486ac1daa144848944e877e7f0cb762_ramips_24kec.ipk
+Generating index for package ./opkg_9c97d5ecd795709c8584e972bfdf3aee3a5b846d-9_ramips_24kec.ipk
+Generating index for package ./ppp-mod-pppoe_2.4.7-6_ramips_24kec.ipk
+Generating index for package ./ppp_2.4.7-6_ramips_24kec.ipk
+Generating index for package ./procd_2015-10-29.1-d5fddd91b966424bb63e943e789704d52382cc18_ramips_24kec.ipk
+Generating index for package ./reg_1_ramips_24kec.ipk
+Generating index for package ./rpcd-mod-iwinfo_2016-04-13-73aea9b8b621a1ce034bc6ee00c9d058a40c8a3d_ramips_24kec.ipk
+Generating index for package ./rpcd-mod-rpcsys_2016-04-13-73aea9b8b621a1ce034bc6ee00c9d058a40c8a3d_ramips_24kec.ipk
+Generating index for package ./rpcd_2016-04-13-73aea9b8b621a1ce034bc6ee00c9d058a40c8a3d_ramips_24kec.ipk
+Generating index for package ./shairport_mmap_2014-10-28-2_ramips_24kec.ipk
+Generating index for package ./swconfig_10_ramips_24kec.ipk
+Generating index for package ./terminfo_5.9-2_ramips_24kec.ipk
+Generating index for package ./uboot-envtools_2014.10-2_ramips_24kec.ipk
+Generating index for package ./ubox_2015-11-22-c086167a0154745c677f8730a336ea9cf7d71031_ramips_24kec.ipk
+Generating index for package ./ubus_2015-05-25-f361bfa5fcb2daadf3b160583ce665024f8d108e_ramips_24kec.ipk
+Generating index for package ./ubusd_2015-05-25-f361bfa5fcb2daadf3b160583ce665024f8d108e_ramips_24kec.ipk
+Generating index for package ./uci_2015-08-27.1-1_ramips_24kec.ipk
+Generating index for package ./uhttpd_2015-11-08-fe01ef3f52adae9da38ef47926cd50974af5d6b7_ramips_24kec.ipk
+Generating index for package ./usign_2015-05-08-cf8dcdb8a4e874c77f3e9a8e9b643e8c17b19131_ramips_24kec.ipk
+Generating index for package ./wireless-tools_29-5_ramips_24kec.ipk
+Generating index for package ./wpad-mini_2015-03-25-1_ramips_24kec.ipk
+Generating index for package ./zlib_1.2.8-1_ramips_24kec.ipk
+Generating index for package ./alsa-lib_1.0.28-1_ramips_24kec.ipk
+Generating index for package ./alsa-utils_1.0.28-2_ramips_24kec.ipk
+Generating index for package ./avahi-dbus-daemon_0.6.31-12_ramips_24kec.ipk
+Generating index for package ./cgi-io_1_ramips_24kec.ipk
+Generating index for package ./dbus_1.9.14-1_ramips_24kec.ipk
+Generating index for package ./kmod-fs-exfat_3.18.29+git-20150301-1_ramips_24kec.ipk
+Generating index for package ./libavahi-client_0.6.31-12_ramips_24kec.ipk
+Generating index for package ./libavahi-dbus-support_0.6.31-12_ramips_24kec.ipk
+Generating index for package ./libdaemon_0.14-5_ramips_24kec.ipk
+Generating index for package ./libdbus_1.9.14-1_ramips_24kec.ipk
+Generating index for package ./libexpat_2.1.0-3_ramips_24kec.ipk
+Generating index for package ./libid3tag_0.15.1b-4_ramips_24kec.ipk
+Generating index for package ./libjpeg_9a-1_ramips_24kec.ipk
+Generating index for package ./libmad_0.15.1b-3_ramips_24kec.ipk
+Generating index for package ./madplay-alsa_0.15.2b-4_ramips_24kec.ipk
+Generating index for package ./mjpg-streamer_r182-7_ramips_24kec.ipk
+Generating index for package ./spi-tools_1-cc6a41fdcec60610703ba6db488c621c64952898_ramips_24kec.ipk
+Signing package index...
+```
+
 ## Resources
 
 - [OpenWrt Wiki](https://wiki.openwrt.org)
