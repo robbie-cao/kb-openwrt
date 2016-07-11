@@ -147,7 +147,7 @@ The OpenWrt project provides **two** main ways to get your software compiled for
 ./scripts/feeds install <PACKAGENAME>
 ```
 
-#### Set Target
+#### Config
 
 ```
 make menuconfig
@@ -198,7 +198,7 @@ nukes everything you have compiled or configured and also deletes all downloaded
 
 CAUTION: In addition to all else, this will erase your build configuration (<buildroot_dir>/.config), your toolchain and all other sources. Use with care!
 
-**Clean Smart Part**
+**Clean Small Part**
 
 ```
 make target/linux/clean
@@ -208,31 +208,30 @@ make package/luci/clean
 
 #### Make Tips
 
-Building Single Packages
+**Building Single Packages**
 
 ```
 make package/cups/compile V=s
 make package/cups/{clean,compile,install} V=s   # for a rebuild
 ```
 
-Spotting Build Errors
+**Spotting Build Errors**
 
 ```
 make V=s 2>&1 | tee build.log | grep -i error
 ```
 
-Getting Beep Notification
+**Getting Beep Notification**
 
 ```
 make V=s ; echo -e '\a'
 ```
 
-Skipping Failed Packages
+**Skipping Failed Packages**
 
 ```
 IGNORE_ERRORS=1 make <make options>
 ```
-
 
 
 > https://wiki.openwrt.org/doc/howto/build
