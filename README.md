@@ -45,6 +45,8 @@ Attitude Adjustment | 态度调整    | 12.09      |
 
 ## Build
 
+### Quick Start
+
 ```
 $ ./scripts/feeds update -a
 $ ./scripts/feeds install -a
@@ -134,6 +136,108 @@ The OpenWrt project provides **two** main ways to get your software compiled for
 > https://github.com/MagnusS/p2p-dprd/wiki/BuildingOpenWrtPackages
 
 > https://forum.openwrt.org/viewtopic.php?pid=31794#p31794
+
+### Usage Example
+
+#### Updating Feeds
+
+```
+./scripts/feeds update -a
+./scripts/feeds install -a
+./scripts/feeds install <PACKAGENAME>
+```
+
+#### Set Target
+
+```
+make menuconfig
+-or-
+make defconfig
+```
+
+```
+./scripts/diffconfig.sh > diffconfig    # write the changes to diffconfig
+cp diffconfig .config                   # write changes to .config
+make defconfig                          # expand to full config
+```
+
+```
+make kernel_menuconfig CONFIG_TARGET=subtarget  # -> kernel config, optional
+```
+
+#### Build Images
+
+```
+make
+-or-
+make world
+```
+
+#### Clean Up
+
+**Clean**
+```
+make clean
+```
+
+deletes contents of the directories `/bin` and `/build_dir`. `make clean` does not remove the `toolchain`, it also avoids cleaning architectures/targets other than the one you have selected in your `.config`.
+
+**Dirclean**
+```
+make dirclean
+```
+
+deletes contents of the directories `/bin` and `/build_dir` and additionally `/staging_dir` and `/toolchain` (=the cross-compile tools) and `/logs`. 'dirclean' is your basic "full clean" operation.
+
+**Distclean**
+```
+make distclean
+```
+
+nukes everything you have compiled or configured and also deletes all downloaded feeds contents and package sources.
+
+CAUTION: In addition to all else, this will erase your build configuration (<buildroot_dir>/.config), your toolchain and all other sources. Use with care!
+
+**Clean Smart Part**
+
+```
+make target/linux/clean
+make package/base-files/clean
+make package/luci/clean
+```
+
+#### Make Tips
+
+Building Single Packages
+
+```
+make package/cups/compile V=s
+make package/cups/{clean,compile,install} V=s   # for a rebuild
+```
+
+Spotting Build Errors
+
+```
+make V=s 2>&1 | tee build.log | grep -i error
+```
+
+Getting Beep Notification
+
+```
+make V=s ; echo -e '\a'
+```
+
+Skipping Failed Packages
+
+```
+IGNORE_ERRORS=1 make <make options>
+```
+
+
+
+> https://wiki.openwrt.org/doc/howto/build
+
+> https://forum.openwrt.org/viewtopic.php?id=28267
 
 ## Buildroot
 
