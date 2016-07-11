@@ -205,6 +205,36 @@ The main Makefile performs the following steps (once the configuration is done):
 
 ![Embedded Linux Build Systrem Principle](images/buildroot_principle.png)
 
+### Package Build Example
+
+```
+>>> zlib 1.2.8 Downloading
+... here it wgets the tarball ...
+>>> zlib 1.2.8 Extracting
+xzcat /home/thomas/dl/zlib-1.2.8.tar.xz | tar ...
+>>> zlib 1.2.8 Patching
+>>> zlib 1.2.8 Configuring
+(cd /home/thomas/projets/buildroot/output/build/zlib-1.2.8;
+	...
+	./configure --shared --prefix=/usr)
+>>> zlib 1.2.8 Building
+/usr/bin/make -j1 -C /home/thomas/projets/buildroot/output/build/zlib-1.2.8
+>>> zlib 1.2.8 Installing to staging directory
+/usr/bin/make -j1 -C /home/thomas/projets/buildroot/output/build/zlib-1.2.8
+	DESTDIR=/home/thomas/projets/buildroot/output/host/usr/arm-buildroot-linux-uclibcgnueabi/sysroot
+	LDCONFIG=true install
+>>> zlib 1.2.8 Installing to target
+/usr/bin/make -j1 -C /home/thomas/projets/buildroot/output/build/zlib-1.2.8
+	DESTDIR=/home/thomas/projets/buildroot/output/target
+	LDCONFIG=true install
+```
+
+### When You Run Make...
+
+![Package Build Example](images/buildroot_package_sequence.png)
+
+> http://free-electrons.com/doc/training/buildroot/buildroot-slides.pdf
+
 ## Concept
 
 ## Source Analysis
