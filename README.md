@@ -182,6 +182,25 @@ The main Makefile performs the following steps (once the configuration is done):
 - Generate the toolchain target.When an internal toolchain is used, this means generating the cross-compilation toolchain. When an external toolchain is used, this means checking the features of the external toolchain and importing it into the Buildroot environment.
 - Generate all the targets listed in the TARGETS variable. This variable is filled by all the individual components' Makefiles. Generating these targets will trigger the compilation of the userspace packages (libraries, programs), the kernel, the bootloader and the generation of the root filesystem images, depending on the configuration.
 
+> https://buildroot.org/downloads/manual/manual.html
+
+### Package Infrastructures
+
+![Package Infrastructures](images/buildroot_package_infrastructures.png)
+
+- Each software component to be built by Buildroot comes with its own build system.
+- Buildroot does not re-invent the build system of each component, it simply uses it.
+- Numerous build systems available: hand-written Makefiles or shell scripts, autotools, CMake and also some specific to languages: Python, Perl, Lua, Erlang, etc.
+- In order to avoid duplicating code, Buildroot has package infrastructures for well-known build systems.
+- And a generic package infrastructure for software components with non-standard build systems.
+
+![Generic Package Infrastructures](images/buildroot_generic_package_steps.png)
+
+- To be used for software components having non-standard build systems.
+- Implements a default behavior for the downloading, extracting and patching steps of the package build process.
+- Implements init script installation, legal information collection, etc.
+- Leaves to the package developer the responsibility of describing what should be done for the configuration, building and installation steps.
+
 ### Principle
 
 ![Embedded Linux Build Systrem Principle](images/buildroot_principle.png)
