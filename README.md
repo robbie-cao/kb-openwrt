@@ -229,9 +229,11 @@ xzcat /home/thomas/dl/zlib-1.2.8.tar.xz | tar ...
 	LDCONFIG=true install
 ```
 
+![Package Build Example](images/buildroot_package_sequence.png)
+
 ### When You Run Make...
 
-![Package Build Example](images/buildroot_package_sequence.png)
+![When You Run Make Example](images/buildroot_make_example.png)
 
 > http://free-electrons.com/doc/training/buildroot/buildroot-slides.pdf
 
