@@ -169,6 +169,19 @@ Buildroot will do the image building through the following steps (once the confi
 
 > http://www.ccs.neu.edu/home/noubir/Courses/CS6710/S12/material/OpenWrt_Dev_Tutorial.pdf
 
+### How Buildroot Works
+
+Buildroot is basically a set of Makefiles that **download**, **configure**, and **compile** software with the correct options. It also includes patches for various software packages.
+
+Each directory contains at least 2 files:
+- something.mk is the Makefile that downloads, configures, compiles and installs the package something.
+- Config.in is a part of the configuration tool description file. It describes the options related to the package.
+
+The main Makefile performs the following steps (once the configuration is done):
+- Create all the output directories: staging, target, build, etc. in the output directory (output/ by default, another value can be specified using O=)
+- Generate the toolchain target.When an internal toolchain is used, this means generating the cross-compilation toolchain. When an external toolchain is used, this means checking the features of the external toolchain and importing it into the Buildroot environment.
+- Generate all the targets listed in the TARGETS variable. This variable is filled by all the individual components' Makefiles. Generating these targets will trigger the compilation of the userspace packages (libraries, programs), the kernel, the bootloader and the generation of the root filesystem images, depending on the configuration.
+
 ### Principle
 
 ![Embedded Linux Build Systrem Principle](images/buildroot_principle.png)
