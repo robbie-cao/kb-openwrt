@@ -792,6 +792,91 @@ package/reg
 
 ## Development
 
+### Adding New Platform Support
+
+> https://wiki.openwrt.org/doc/devel/add.new.platform
+
+### Adding New Device Support
+
+1. Create a new board definition, which will generate an image file specifically for your device and runs device-specific code.
+2. Write various board-specific hacks to initialize devices and set the correct default configuration.
+
+Board identifier will be passed in the following sequence:
+
+```
+           +----------------------------------------------------+
+           | Image generator puts it in the kernel command line |
+           +----------------------------------------------------+
+                                    |
+                                    v
+          +------------------------------------------------------+
+          | Kernel command line is executed with BOARD=MY_BOARD  |
+          +------------------------------------------------------+
+                                    |
+                                    v
++----------------------------------------------------------------------------+
+| Kernel code for ramips finds your board and loads machine-specific code    |
++----------------------------------------------------------------------------+
+                                    |
+                                    v
++----------------------------------------------------------------------------+
+| /lib/ramips.sh:ramips_board_name() reads the board name from /proc/cpuinfo |
++----------------------------------------------------------------------------+
+                                    |
+                                    v
++----------------------------------------------------------------------------+
+| Several userspace scripts use ramips_board_name() for board-specific setup |
++----------------------------------------------------------------------------+
+```
+
+At a minimum, you need to make the following changes to make a basic build, all under target/linux/ramips/:
+
+- Add a new machine image in image/Makefile
+- Create a new machine file in arch/mips/ralink/$CHIP/mach-myboard.c where you register:
+    - GPIO pins for LEDs and buttons
+    - Port layout for the device (vlan configuration)
+    - Flash memory configuration
+    - Wifi
+    - USB
+    - Watchdog timer
+    - And anything else specific to your board
+- Reference the new machine file in arch/mips/ralink/$CHIP/{Kconfig,Makefile}
+- Reference the new machine name in files/arch/mips/include/asm/mach-ralink/machine.h
+- Add your board to base-files/lib/ramips.sh for userspace scripts to read the board name
+
+Then you'll want to modify some of these files depending on your board's features:
+
+- `base-files/etc/diag.sh` to set a LED which OpenWRT should blink on bootup
+- `base-files/lib/upgrade/platform.sh` to allow sysupgrade to work on your board
+- `base-files/etc/uci-defaults/network` to configure default network interface settings, particularly MAC addresses
+- `base-files/etc/uci-defaults/leds` if you have configurable LEDs which should default to a behavior, like a WLAN activity LED
+- `base-files/etc/hotplug.d/firmware/10-rt2x00-eeprom` to extract the firmware image for the wireless module
+- `base-files/lib/preinit/06_set_iface_mac` to set the MAC addresses of any other interfaces
+
+Examples:
+- [ramips: rt305x: add support for the Skyline SL-R7205 Wireless 3G router](https://dev.openwrt.org/changeset/30645)
+- [ramips: rt288x: add support for the Belkin F5D8235-4 v1 board](https://dev.openwrt.org/changeset/29617)
+- [ramips: add support for Planex DB-WRT01](https://dev.openwrt.org/changeset/46918)
+
+Tips:
+
+After add a new board, you may should clean the tmp folder first.
+
+```
+cd trunk
+rm -rf tmp
+make menuconfig
+```
+
+If you have added a device profile, and it isn't showing up in "make menuconfig" try touching the main target makefile
+
+```
+touch target/linux/*/Makefile
+```
+
+> https://wiki.openwrt.org/doc/devel/add.new.device
+
+
 ## Tools
 
 ## Community
