@@ -27,6 +27,21 @@ OpenWrt's objectives:
 
 > https://wiki.openwrt.org/about/start
 
+
+OpenWrt's goals:
+
+- behave like a normal Linux system
+- abstract the hardware
+	- e.g. same wifi configuration over all chips
+- use upstream code and upstream own extensions
+	- trunk normally uses a recent upstream kernel, currently 3.18 or 4.1
+- image (kernel + rootfs) + optional packages
+	- build one kernel binary which boots on different boards and SoCs
+	- runtime board detection (e.g. device tree)
+	- customization for specific boards with selected packages
+
+> https://prplworks.files.wordpress.com/2015/10/openwrt-adding-new-soc.pdf
+
 ## Download
 
 ## Branch
