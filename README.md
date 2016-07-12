@@ -260,7 +260,7 @@ IGNORE_ERRORS=1 make <make options>
 - **bin** -  where the firmware image will be generated and all the .ipk package files will be generated
 
 
-Simply speaking, once the OpenWrt buildroot has been properly configured, e.g. 
+Simply speaking, once the OpenWrt buildroot has been properly configured, e.g.
 the target platform and architecture is specified, user-space packages selected, etc., the OpenWrt
 Buildroot will do the image building through the following steps (once the configuration is done):
 1. Download the cross-compilation tools, kernel headers, etc. and
@@ -916,21 +916,21 @@ cp -fpR "/home/robbie/GitHub/widora/target/linux/generic/files"/. /home/robbie/G
 
 find /home/robbie/GitHub/widora/build_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/linux-3.18.29/ -name \*.rej -or -name \*.orig | xargs -r rm -f
 
-Applying /home/robbie/GitHub/widora/target/linux/generic/patches-3.18/000-keep_initrafs_the_default.patch using plaintext: 
+Applying /home/robbie/GitHub/widora/target/linux/generic/patches-3.18/000-keep_initrafs_the_default.patch using plaintext:
 patching file init/do_mounts.c
 
-Applying /home/robbie/GitHub/widora/target/linux/generic/patches-3.18/020-ssb_update.patch using plaintext: 
+Applying /home/robbie/GitHub/widora/target/linux/generic/patches-3.18/020-ssb_update.patch using plaintext:
 patching file drivers/ssb/pcihost_wrapper.c
 patching file drivers/ssb/driver_pcicore.c
 patching file drivers/ssb/main.c
 
-Applying /home/robbie/GitHub/widora/target/linux/generic/patches-3.18/021-ssb_sprom.patch using plaintext: 
+Applying /home/robbie/GitHub/widora/target/linux/generic/patches-3.18/021-ssb_sprom.patch using plaintext:
 patching file include/linux/ssb/ssb.h
 
 ...
 ...
 
-Applying /home/robbie/GitHub/widora/target/linux/generic/patches-3.18/999-seccomp_log.patch using plaintext: 
+Applying /home/robbie/GitHub/widora/target/linux/generic/patches-3.18/999-seccomp_log.patch using plaintext:
 patching file kernel/seccomp.c
 patching file include/uapi/linux/seccomp.h
 touch /home/robbie/GitHub/widora/build_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/linux-3.18.29/.quilt_used
