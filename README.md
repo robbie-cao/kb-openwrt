@@ -155,6 +155,27 @@ make menuconfig
 make defconfig
 ```
 
+- target:  `target/linux/<target>`, represent SoC line
+	- target name
+	- cpu type
+	- compiler options
+	- kernel patches
+	- additional kernel  files
+	- kernel configuration
+	- image building scripts
+	- base files
+- subtarget: `target/linux/<target>/<subtarget>`, represent SoC generation
+	- specialization of a target
+		- different kernel options
+		- different compiler options
+- profile: `target/linux/<target>/<subtarget>/profiles/<vendor>.mk`, for each board
+	- same kernel binary as above (sub)target
+	- different default packages
+	- specific image headers
+
+> https://prplworks.files.wordpress.com/2015/10/openwrt-adding-new-soc.pdf
+
+
 ```
 ./scripts/diffconfig.sh > diffconfig    # write the changes to diffconfig
 cp diffconfig .config                   # write changes to .config
