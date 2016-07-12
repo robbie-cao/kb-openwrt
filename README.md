@@ -335,6 +335,8 @@ The main Makefile performs the following steps (once the configuration is done):
 - In order to avoid duplicating code, Buildroot has package infrastructures for well-known build systems.
 - And a generic package infrastructure for software components with non-standard build systems.
 
+### Workflow
+
 ![Generic Package Infrastructures](images/buildroot_generic_package_steps.png)
 
 - To be used for software components having non-standard build systems.
@@ -914,6 +916,31 @@ touch target/linux/*/Makefile
 
 > https://wiki.openwrt.org/doc/devel/add.new.device
 
+### Audio Support in OpenWrt
+
+- [Openwrt Cheap Digital Stereo WiFi Internet Radio & MP3 Player](https://forum.openwrt.org/viewtopic.php?id=49013)
+- [OpenWRT as Sound Server with PulseAudio](https://blog.stefan-horning.de/articles/532-OpenWRT-as-sound-server-with-PulseAudio.html)
+- [How to Run Music Player Daemon on an OpenWRT WiFi Router](https://silkemeyer.net/wifihifi-how-to-run-music-player-daemon-on-an-openwrt-wifi-router)
+
+![OpenWrt-Wifi-MPD](https://silkemeyer.net/wp-content/uploads/wifi-mpd.png)
+
+- https://wiki.openwrt.org/doc/howto/usb.audio
+- https://wiki.openwrt.org/doc/howto/pulseaudio
+- https://en.wikipedia.org/wiki/Advanced_Linux_Sound_Architecture
+- https://en.wikipedia.org/wiki/PulseAudio
+
+![ALSA](https://upload.wikimedia.org/wikipedia/commons/9/91/Linux_kernel_and_gaming_input-output_latency.svg)
+
+
+### Mic Support in OpenWrt
+
+- https://wiki.openwrt.org/doc/howto/lirc-audio_alsa
+
+
+### Video Support in OpenWrt
+
+- https://wiki.openwrt.org/doc/howto/usb.video
+- http://h-wrt.com/en/doc/webcam
 
 ## Tools
 
