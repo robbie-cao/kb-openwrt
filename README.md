@@ -44,15 +44,17 @@ OpenWrt's goals:
 
 ## Download
 
-## Branch
+## Branch and Codename
 
-Code Name           | Translation | Version    | Status
-------------------- | ----------- | ---------- | --------------
-Designated Driver   | 代驾人      | developing | trunk
-Chaos Calmer        | 平乱人      | 15.05.1    | current stable
-Chaos Calmer        |             | 15.05      |
-Barrier Breaker     | 破障人      | 14.07      |
-Attitude Adjustment | 态度调整    | 12.09      |
+The code names of OpenWrt branches are named after alcoholic beverages, usually including their recipes in the MOTD as well, cf. White Russian, Kamikaze, Backfire, Attitude Adjustment, Barrier Breaker.
+
+Code Name           | Version    | Status
+------------------- | ---------- | --------------
+Designated Driver   | developing | trunk
+Chaos Calmer        | 15.05.1    | current stable
+Chaos Calmer        | 15.05      |
+Barrier Breaker     | 14.07      |
+Attitude Adjustment | 12.09      |
 
 > https://wiki.openwrt.org/about/history
 >
