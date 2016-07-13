@@ -64,7 +64,7 @@ Attitude Adjustment | 12.09      |
 
 ### Quick Start
 
-    ```
+```
     $ ./scripts/feeds update -a
     $ ./scripts/feeds install -a
     $ make menuconfig           # config target options for most cases
@@ -79,7 +79,7 @@ Attitude Adjustment | 12.09      |
         - s: stdout+stderr (equal to the old V=99)
         - c: commands (for build systems that suppress commands by default, e.g. kbuild, cmake)
         - w: warnings/errors only (equal to the old V=1)
-    ```
+```
 
 The OpenWrt build system is a set of Makefiles and patches that allows users to easily
 generate both a cross-compilation toolchain and a root filesystem for embedded systems.
@@ -99,19 +99,19 @@ generate both a cross-compilation toolchain and a root filesystem for embedded s
 - Compile a package: package/foo/compile
 - Clean a package: package/foo/clean
 
-    ```
+```
       make[2] toolchain/install
       make[3] -C toolchain install
       make[2] target/compile
       make[3] -C target compile
       make[4] -C target/utils prepare
-    ```
+```
 
 > https://wiki.openwrt.org/about/toolchain
 
 ### Build Sequence
 
-    ```
+```
     tools - automake, autoconf, sed, cmake
     toolchain/binutils - as, ld, ...
     toolchain/gcc - gcc, g++, cpp, ...
@@ -119,13 +119,13 @@ generate both a cross-compilation toolchain and a root filesystem for embedded s
     package - core and feed packages
     target/linux - kernel image
     target/linux/image - firmware image file generation
-    ```
+```
 
 ### Make Sequence
 
 Top command make world calls the following sequence of the commands:
 
-    ```
+```
     make target/compile
     make package/cleanup
     make package/compile
@@ -133,17 +133,17 @@ Top command make world calls the following sequence of the commands:
     make package/preconfig
     make target/install
     make package/index
-    ```
+```
 
 You may run each command independency. For example, if the process of compilation of packages stops on error, you may fix the problem and next continue without cleanup:
 
-    ```
+```
     make package/compile
     make package/install
     make package/preconfig
     make target/install
     make package/index
-    ```
+```
 
 > https://wiki.openwrt.org/doc/techref/buildroot
 
@@ -161,19 +161,19 @@ The OpenWrt project provides **two** main ways to get your software compiled for
 
 #### Updating Feeds
 
-    ```
+```
     ./scripts/feeds update -a
     ./scripts/feeds install -a
     ./scripts/feeds install <PACKAGENAME>
-    ```
+```
 
 #### Config
 
-    ```
+```
     make menuconfig
     -or-
     make defconfig
-    ```
+```
 
 - target:  `target/linux/<target>`, represent SoC line
     - target name
@@ -196,47 +196,47 @@ The OpenWrt project provides **two** main ways to get your software compiled for
 > https://prplworks.files.wordpress.com/2015/10/openwrt-adding-new-soc.pdf
 
 
-    ```
+```
     ./scripts/diffconfig.sh > diffconfig    # write the changes to diffconfig
     cp diffconfig .config                   # write changes to .config
     make defconfig                          # expand to full config
-    ```
+```
  
-    ```
+```
     make kernel_menuconfig CONFIG_TARGET=subtarget  # -> kernel config, optional
-    ```
+```
 
 #### Build Images
 
-    ```
+```
     make
     -or-
     make world
-    ```
+```
 
 #### Clean Up
 
 **Clean**
 
-    ```
+```
     make clean
-    ```
+```
 
 deletes contents of the directories `/bin` and `/build_dir`. `make clean` does not remove the `toolchain`, it also avoids cleaning architectures/targets other than the one you have selected in your `.config`.
 
 **Dirclean**
 
-    ```
+```
     make dirclean
-    ```
+```
 
 deletes contents of the directories `/bin` and `/build_dir` and additionally `/staging_dir` and `/toolchain` (=the cross-compile tools) and `/logs`. 'dirclean' is your basic "full clean" operation.
 
 **Distclean**
 
-    ```
+```
     make distclean
-    ```
+```
 
 nukes everything you have compiled or configured and also deletes all downloaded feeds contents and package sources.
 
@@ -244,38 +244,38 @@ CAUTION: In addition to all else, this will erase your build configuration (<bui
 
 **Clean Small Part**
 
-    ```
+```
     make target/linux/clean
     make package/base-files/clean
     make package/luci/clean
-    ```
+```
 
 #### Make Tips
 
 **Building Single Packages**
 
-    ```
+```
     make package/cups/compile V=s
     make package/cups/{clean,compile,install} V=s   # for a rebuild
-    ```
+```
 
 **Spotting Build Errors**
 
-    ```
+```
     make V=s 2>&1 | tee build.log | grep -i error
-    ```
+```
 
 **Getting Beep Notification**
 
-    ```
+```
     make V=s ; echo -e '\a'
-    ```
+```
 
 **Skipping Failed Packages**
 
-    ```
+```
     IGNORE_ERRORS=1 make <make options>
-    ```
+```
 
 
 > https://wiki.openwrt.org/doc/howto/build
@@ -356,7 +356,7 @@ The main Makefile performs the following steps (once the configuration is done):
 
 ### Package Build Example
 
-    ```
+```
     >>> zlib 1.2.8 Downloading
     ... here it wgets the tarball ...
     >>> zlib 1.2.8 Extracting
@@ -376,7 +376,7 @@ The main Makefile performs the following steps (once the configuration is done):
     /usr/bin/make -j1 -C /home/thomas/projets/buildroot/output/build/zlib-1.2.8
         DESTDIR=/home/thomas/projets/buildroot/output/target
         LDCONFIG=true install
-    ```
+```
 
 ![Package Build Example](images/buildroot_package_sequence.png)
 
@@ -396,7 +396,7 @@ The main Makefile performs the following steps (once the configuration is done):
 
 ### dl
 
-    ```
+```
     dl/1.0.4.3.arm
     dl/alsa-lib-1.0.28.tar.bz2
     dl/alsa-utils-1.0.28.tar.bz2
@@ -486,13 +486,13 @@ The main Makefile performs the following steps (once the configuration is done):
     dl/xz-5.2.1.tar.bz2
     dl/yaffs2_android-2008-12-18.tar.bz2
     dl/zlib-1.2.8.tar.gz
-    ```
+```
 
 ### toolchain
 
 ### tools
 
-    ```
+```
     tools/autoconf
     tools/automake
     tools/b43-tools
@@ -545,11 +545,11 @@ The main Makefile performs the following steps (once the configuration is done):
     tools/wrt350nv2-builder
     tools/xz
     tools/yaffs2
-    ```
+```
 
 ### build_dir
 
-    ```
+```
     build_dir
     build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2
     build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/json-c-0.12
@@ -664,13 +664,13 @@ The main Makefile performs the following steps (once the configuration is done):
     build_dir/host/mpfr-3.1.2
     build_dir/host/yaffs2_android
     build_dir/host/opkg-9c97d5ecd795709c8584e972bfdf3aee3a5b846d
-    ```
+```
 
 ### config
 
 ### package
 
-    ```
+```
     package
     package/system
     package/system/procd
@@ -834,7 +834,7 @@ The main Makefile performs the following steps (once the configuration is done):
     package/boot/uboot-ar71xx
     package/mtk-sdk-wifi
     package/reg
-    ```
+```
 
 ## Development
 
@@ -849,7 +849,7 @@ The main Makefile performs the following steps (once the configuration is done):
 
 Board identifier will be passed in the following sequence:
 
-    ```
+```
                +----------------------------------------------------+
                | Image generator puts it in the kernel command line |
                +----------------------------------------------------+
@@ -873,7 +873,7 @@ Board identifier will be passed in the following sequence:
     +----------------------------------------------------------------------------+
     | Several userspace scripts use ramips_board_name() for board-specific setup |
     +----------------------------------------------------------------------------+
-    ```
+```
 
 At a minimum, you need to make the following changes to make a basic build, all under target/linux/ramips/:
 
@@ -908,17 +908,17 @@ Tips:
 
 After add a new board, you may should clean the tmp folder first.
 
-    ```
+```
     cd trunk
     rm -rf tmp
     make menuconfig
-    ```
+```
 
 If you have added a device profile, and it isn't showing up in "make menuconfig" try touching the main target makefile
 
-    ```
+```
     touch target/linux/*/Makefile
-    ```
+```
 
 > https://wiki.openwrt.org/doc/devel/add.new.device
 
@@ -975,7 +975,7 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
 
 **download**
 
-    ```
+```
     mkdir -p /home/robbie/GitHub/widora/dl
     /home/robbie/GitHub/widora/scripts/download.pl "/home/robbie/GitHub/widora/dl" "linux-3.18.29.tar.xz" "b25737a0bc98e80d12200de93f239c28" "" "@KERNEL/linux/kernel/v3.x"
     --2016-07-07 23:42:35--  ftp://ftp.all.kernel.org/pub/linux/kernel/v3.x/linux-3.18.29.tar.xz
@@ -988,17 +988,17 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
     ==> SIZE linux-3.18.29.tar.xz ... 81044012
     ==> PASV ... done.    ==> RETR linux-3.18.29.tar.xz ... done.
     Length: 81044012 (77M) (unauthoritative)
-    ```
+```
 
 **extract**
 
-    ```
+```
     xzcat /home/robbie/GitHub/widora/dl/linux-3.18.29.tar.xz | tar -C /home/robbie/GitHub/widora/build_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2 -xf -
-    ```
+```
 
 **patch**
 
-    ```
+```
     rm -rf /home/robbie/GitHub/widora/build_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/linux-3.18.29/patches; mkdir -p /home/robbie/GitHub/widora/build_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/linux-3.18.29/patches
     cp -fpR "/home/robbie/GitHub/widora/target/linux/generic/files"/. /home/robbie/GitHub/widora/build_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/linux-3.18.29/
 
@@ -1022,11 +1022,11 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
     patching file kernel/seccomp.c
     patching file include/uapi/linux/seccomp.h
     touch /home/robbie/GitHub/widora/build_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/linux-3.18.29/.quilt_used
-    ```
+```
 
 **configure**
 
-    ```
+```
     /home/robbie/GitHub/widora/scripts/kconfig.pl  + /home/robbie/GitHub/widora/target/linux/generic/config-3.18 /home/robbie/GitHub/widora/target/linux/ramips/mt7688/config-3.18 > /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config.target
     awk '/^(#[[:space:]]+)?CONFIG_KERNEL/{sub("CONFIG_KERNEL_","CONFIG_");print}' /home/robbie/GitHub/widora/.config >> /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config.target
     echo "# CONFIG_KALLSYMS_EXTRA_PASS is not set" >> /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config.target
@@ -1038,11 +1038,11 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
     ...
     ...
 
-    ```
+```
 
 **build**
 
-    ```
+```
     make -C /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29 HOSTCFLAGS="-O2 -I/home/robbie/GitHub/widora/staging_dir/host/include -I/home/robbie/GitHub/widora/staging_dir/host/usr/include -Wall -Wmissing-prototype
     s -Wstrict-prototypes" CROSS_COMPILE="mipsel-openwrt-linux-uclibc-" ARCH="mips" KBUILD_HAVE_NLS=no CONFIG_SHELL="bash" V=1 CC="mipsel-openwrt-linux-uclibc-gcc" modules
     make -f ./Makefile silentoldconfig
@@ -1084,10 +1084,10 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
     ...
     ...
 
-    ```
+```
 
 
-    ```
+```
     LD      vmlinux
     + vmlinux_link .tmp_kallsyms2.o vmlinux
     + local lds=./arch/mips/kernel/vmlinux.lds
@@ -1106,18 +1106,18 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
         SYSMAP  System.map
     + mksysmap vmlinux System.map
     + bash ./scripts/mksysmap vmlinux System.map
-    ```
+```
 
-    ```
+```
     mipsel-openwrt-linux-uclibc-objcopy -O binary -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/vmlinux /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux
     mipsel-openwrt-linux-uclibc-objcopy -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/vmlinux /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux.elf
     cp -fpR /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/vmlinux /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux.debug
     touch /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.image
-    ```
+```
 
 **install**
 
-    ```
+```
     install -d -m0755 /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/root-ramips/tmp /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/root-ramips/overlay
     chmod 1777 /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/root-ramips/tmp
     cp /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux.elf /home/robbie/GitHub/widora/bin/ramips/openwrt-ramips-mt7688-vmlinux.elf
@@ -1326,7 +1326,7 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
     Generating index for package ./mjpg-streamer_r182-7_ramips_24kec.ipk
     Generating index for package ./spi-tools_1-cc6a41fdcec60610703ba6db488c621c64952898_ramips_24kec.ipk
     Signing package index...
-    ```
+```
 
 ## Resources
 
