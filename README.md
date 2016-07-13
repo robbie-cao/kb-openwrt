@@ -946,7 +946,10 @@ touch target/linux/*/Makefile
 
 - https://wiki.openwrt.org/doc/howto/usb.bluetooth
 - https://wiki.openwrt.org/doc/howto/bluetooth.audio
+- https://wiki.openwrt.org/doc/howto/bluetooth.6lowpan
 - http://h-wrt.com/en/doc/bluetooth
+- https://devzone.nordicsemi.com/blogs/663/6lowpan-for-bluetooth-low-energy-on-openwrt/
+- https://github.com/arduino/openwrt-yun/issues/9
 
 ### NFC Support in OpenWrt
 
