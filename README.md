@@ -344,7 +344,7 @@ The main Makefile performs the following steps (once the configuration is done):
 - Implements init script installation, legal information collection, etc.
 - Leaves to the package developer the responsibility of describing what should be done for the configuration, building and installation steps.
 
-### Principle
+### Build System Architecture
 
 ![Embedded Linux Build Systrem Principle](images/buildroot_principle.png)
 
@@ -942,6 +942,12 @@ touch target/linux/*/Makefile
 - https://wiki.openwrt.org/doc/howto/usb.video
 - http://h-wrt.com/en/doc/webcam
 
+### Bluetooth Support in OpenWrt
+
+- https://wiki.openwrt.org/doc/howto/usb.bluetooth
+- https://wiki.openwrt.org/doc/howto/bluetooth.audio
+- http://h-wrt.com/en/doc/bluetooth
+
 ## Tools
 
 ## Community
@@ -1014,6 +1020,7 @@ echo "# CONFIG_KALLSYMS_UNCOMPRESSED is not set" >> /home/robbie/GitHub/widora/b
 mv /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/.config.old
 ...
 ...
+
 ```
 
 **build**
@@ -1059,6 +1066,7 @@ make -f ./scripts/Makefile.build obj=fs/kernfs
 make -f ./scripts/Makefile.build obj=fs/nls
 ...
 ...
+
 ```
 
 
