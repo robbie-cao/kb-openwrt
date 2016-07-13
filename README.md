@@ -836,6 +836,48 @@ The main Makefile performs the following steps (once the configuration is done):
     package/reg
 ```
 
+## Installation and Upgrade
+
+In most circumstances, you have three options:
+
+- Option 1: install OpenWrt onto the router's non-volatile memory
+- Option 2: install OpenWrt onto the RAM
+- Option 3: boot OpenWrt over the network (netbooting is not supported by all bootloaders).
+
+
+There are four ways to install OpenWrt on a device:
+
+- Method 1: via OEM firmware
+- Method 2: via Bootloader and an Ethernet port
+- Method 3: via Bootloader and Serial port
+- Method 4: via JTAG
+
+> https://wiki.openwrt.org/doc/howto/generic.overview
+>
+> https://wiki.openwrt.org/doc/howto/generic.flashing
+
+
+An OpenWrt upgrade will replace the entire current OpenWrt installation with a new version. This includes the Linux kernel, the SquashFS partition and the JFFS2 partition.
+
+> https://wiki.openwrt.org/doc/howto/generic.sysupgrade
+
+
+### Installation via `tftp`
+
+> https://wiki.openwrt.org/doc/howto/generic.flashing.tftp
+
+### Installation via Serial Port
+
+> https://wiki.openwrt.org/doc/howto/generic.flashing.serial
+
+### Upgrade vi LuCI Web Interface
+
+### Upgrade via `sysupgrade`
+
+> https://wiki.openwrt.org/doc/techref/sysupgrade
+
+> https://wiki.openwrt.org/doc/howto/generic.sysupgrade
+
 ## Development
 
 ### Adding New Platform Support
