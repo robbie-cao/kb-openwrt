@@ -1023,6 +1023,9 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
 - http://blog.csdn.net/qinpeng_zbdx/article/details/8570488
 - https://gist.github.com/ninehills/2627163
 
+### ADB (Android Debug Bridge) in OpenWrt
+
+- https://forum.openwrt.org/viewtopic.php?id=52720
 
 ### Kernel Build Sequence
 
