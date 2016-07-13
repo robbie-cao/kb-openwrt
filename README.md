@@ -948,6 +948,14 @@ touch target/linux/*/Makefile
 - https://wiki.openwrt.org/doc/howto/bluetooth.audio
 - http://h-wrt.com/en/doc/bluetooth
 
+### NFC Support in OpenWrt
+
+- http://www.onewrt.com/hello-world/
+
+### Input (Touch, Keyboard, Inertial Sensors) Support in OpenWrt
+
+> TODO
+
 ## Tools
 
 ## Community
