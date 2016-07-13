@@ -201,7 +201,7 @@ The OpenWrt project provides **two** main ways to get your software compiled for
     cp diffconfig .config                   # write changes to .config
     make defconfig                          # expand to full config
 ```
- 
+
 ```
     make kernel_menuconfig CONFIG_TARGET=subtarget  # -> kernel config, optional
 ```
@@ -971,6 +971,17 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
 
 ## Misc
 
+### OpenWrt on TP-LINK TL-WR703N
+
+- https://wiki.openwrt.org/toh/tp-link/tl-wr703n
+- https://wiki.openwrt.org/zh-cn/toh/tp-link/tl-wr703n
+- https://forum.openwrt.org/viewtopic.php?id=33387
+- https://wiki.xinchejian.com/wiki/Install_OpenWRT_on_TPlink_WR703N
+- https://linuxtoy.org/archives/howto-install-openwrt-on-tl-wr703n.html
+- http://blog.csdn.net/qinpeng_zbdx/article/details/8570488
+- https://gist.github.com/ninehills/2627163
+
+
 ### Kernel Build Sequence
 
 **download**
@@ -1123,7 +1134,7 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
     cp /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux.elf /home/robbie/GitHub/widora/bin/ramips/openwrt-ramips-mt7688-vmlinux.elf
     cp /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux /home/robbie/GitHub/widora/bin/ramips/openwrt-ramips-mt7688-vmlinux.bin
     /home/robbie/GitHub/widora/staging_dir/host/bin/lzma e /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux -lc1 -lp2 -pb2 /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux.bin.lzma
-    
+
     LZMA 4.65 : Igor Pavlov : Public domain : 2009-02-03
     mkimage -A mips -O linux -T kernel -C lzma -a 0x80000000 -e 0x80000000 -n "MIPS OpenWrt Linux-3.18.29" -d /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux.bin.lzma /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/uImage.lzma
     Image Name:   MIPS OpenWrt Linux-3.18.29
@@ -1138,7 +1149,7 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
     Ignoring, exclude it (-e/-ef) to override.
     Parallel mksquashfs: Using 1 processor
     Creating 4.0 filesystem on /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/root.squashfs, block size 262144.
-    
+
     [=======|                                                        ] 100/813  12%
     [===============-                                                ] 200/813  24%
     [=======================\                                        ] 300/813  36%
@@ -1179,7 +1190,7 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
     /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/linux-3.18.29/scripts/dtc/dtc -O dtb -o /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/Widora.dtb ../dts/Widora.dts
     /home/robbie/GitHub/widora/staging_dir/host/bin/patch-dtb /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux-Widora /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/Widora.dtb
     /home/robbie/GitHub/widora/staging_dir/host/bin/lzma e /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux-Widora -lc1 -lp2 -pb2 /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux-Widora.bin.lzma
-    
+
     LZMA 4.65 : Igor Pavlov : Public domain : 2009-02-03
     mkimage -A mips -O linux -T kernel -C lzma -a 0x80000000 -e 0x80000000 -n "MIPS OpenWrt Linux-3.18.29" -d /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux-Widora.bin.lzma /home/robbie/GitHub/widora/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7688/vmlinux-Widora.uImage
     Image Name:   MIPS OpenWrt Linux-3.18.29
