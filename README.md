@@ -1451,6 +1451,19 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
 	scp root@192.168.31.xxx:/tmp/art.backup.bin .
 ```
 
+### OpenWrt Filesystem and Memory
+
+![OpenWrt Filesystem and Memory](images/openwrt_fs_memory.png)
+
+- / this is your entire root filesystem, it comprises /rom and /overlay. Please ignore /rom and /overlay and use exclusively / for your daily routines!
+- /rom contains all the basic files, like busybox, dropbear or iptables. It also includes default configuration files used when booting into OpenWrt Failsafe mode. It does not contain the Linux kernel. All files in this directory are located on the SqashFS partition, and thus cannot be altered or deleted. But, because we use overlay_fs filesystem, so called overlay-whiteout-symlinks can be created on the JFFS2 partition.
+- /overlay is the writable part of the file system that gets merged with /rom to create a uniform /-tree. It contains anything that was written to the router after installation, e.g. changed configuration files, additional packages installed with opkg, etc. It is formated with JFFS2.
+  Rather than deleting the files, insert a whiteout, a special high-priority entry that marks the file as deleted. File system code that sees a whiteout entry for file F behaves as if F does not exist.
+- /tmp is a tmpfs-partition
+- /dev
+
+> https://wiki.openwrt.org/doc/techref/file_system
+
 ### Restore ART Partition
 
 ```
