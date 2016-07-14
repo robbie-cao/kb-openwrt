@@ -885,6 +885,40 @@ Assume connect target board and host are in the same intranet(eg, target ip - 19
 	sysupgrade -v /tmp/openwrt-upgrade-img.bin
 ```
 
+`sysupgrade` usage
+
+```
+    Usage: /sbin/sysupgrade [<upgrade-option>...] <image file or URL>
+           /sbin/sysupgrade [-q] [-i] <backup-command> <file>
+
+    upgrade-option:
+            -d <delay>   add a delay before rebooting
+            -f <config>  restore configuration from .tar.gz (file or url)
+            -i           interactive mode
+            -c           attempt to preserve all changed files in /etc/
+            -n           do not save configuration over reflash
+            -T | --test
+                         Verify image and config .tar.gz but do not actually flash.
+            -F | --force
+                         Flash image even if image checks fail, this is dangerous!
+            -q           less verbose
+            -v           more verbose
+            -h | --help  display this help
+
+    backup-command:
+            -b | --create-backup <file>
+                         create .tar.gz of files specified in sysupgrade.conf
+                         then exit. Does not flash an image. If file is '-',
+                         i.e. stdout, verbosity is set to 0 (i.e. quiet).
+            -r | --restore-backup <file>
+                         restore a .tar.gz created with sysupgrade -b
+                         then exit. Does not flash an image. If file is '-',
+                         the archive is read from stdin.
+            -l | --list-backup
+                         list the files that would be backed up when calling
+                         sysupgrade -b. Does not create a backup file.
+```
+
 > https://wiki.openwrt.org/doc/techref/sysupgrade
 
 > https://wiki.openwrt.org/doc/howto/generic.sysupgrade
