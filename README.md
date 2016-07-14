@@ -872,7 +872,18 @@ An OpenWrt upgrade will replace the entire current OpenWrt installation with a n
 
 ### Upgrade vi LuCI Web Interface
 
+> TODO
+
 ### Upgrade via `sysupgrade`
+
+Assume connect target board and host are in the same intranet(eg, target ip - 192.168.31.xxx, host ip - 192.168.31.yyy) and host has tftp server setup.
+```
+	# host side
+	scp openwrt-upgrade-img.bin root@192.168.31.xxx:/tmp/
+
+	# target side
+	sysupgrade -v /tmp/openwrt-upgrade-img.bin
+```
 
 > https://wiki.openwrt.org/doc/techref/sysupgrade
 
