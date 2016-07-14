@@ -1429,6 +1429,67 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
     Signing package index...
 ```
 
+## How To
+
+### Backup ART Partition (Factory Data)
+
+```
+	# target side
+	root@Widora:/# cat /proc/mtd
+	dev:    size   erasesize  name
+	mtd0: 00030000 00010000 "u-boot"
+	mtd1: 00010000 00010000 "u-boot-env"
+	mtd2: 00010000 00010000 "factory"
+	mtd3: 00fb0000 00010000 "firmware"
+	mtd4: 00119d29 00010000 "kernel"
+	mtd5: 00e962d7 00010000 "rootfs"
+	root@Widora:/# dd if=/dev/mtd2 of=/tmp/art.backup.bin
+	128+0 records in
+	128+0 records out
+
+	# host side
+	scp root@192.168.31.xxx:/tmp/art.backup.bin .
+```
+
+### Restore ART Partition
+
+```
+	mtd -r write /tmp/art.backup.bin factory
+```
+
+`mtd` usage:
+
+```
+	Usage: mtd [<options> ...] <command> [<arguments> ...] <device>[:<device>...]
+
+	The device is in the format of mtdX (eg: mtd4) or its label.
+	mtd recognizes these commands:
+	        unlock                  unlock the device
+	        refresh                 refresh mtd partition
+	        erase                   erase all data on device
+	        verify <imagefile>|-    verify <imagefile> (use - for stdin) to device
+	        write <imagefile>|-     write <imagefile> (use - for stdin) to device
+	        jffs2write <file>       append <file> to the jffs2 partition on the device
+	        fixseama                fix the checksum in a seama header on first boot
+	Following options are available:
+	        -q                      quiet mode (once: no [w] on writing,
+	                                           twice: no status messages)
+	        -n                      write without first erasing the blocks
+	        -r                      reboot after successful command
+	        -f                      force write without trx checks
+	        -e <device>             erase <device> before executing the command
+	        -d <name>               directory for jffs2write, defaults to "tmp"
+	        -j <name>               integrate <file> into jffs2 data when writing an image
+	        -s <number>             skip the first n bytes when appending data to the jffs2 partiton, defaults to "0"
+	        -p                      write beginning at partition offset
+	        -l <length>             the length of data that we want to dump
+
+	Example: To write linux.trx to mtd4 labeled as linux and reboot afterwards
+	         mtd -r write linux.trx linux
+```
+
+> https://wiki.openwrt.org/doc/howto/restore_art_partition
+
 ## Resources
 
 - [OpenWrt Wiki](https://wiki.openwrt.org)
