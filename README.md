@@ -1439,33 +1439,49 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
 
 ### Boot Process
 
-- Bootloader
+The booting process in OpenWRT box is similar to PC's, especially to Linux and UNIX. It can be divided into three stages or Process Trinity, according to OpenWRT definition.
 
-  1. the bootloader on the flash gets executed
-  2. the bootloader performs the POST (Power-On-Self-Test), which is a low-level hardware initialization
-  3. the bootloader decompresses the Kernel image from its (known!) location on the flash storage into main memory (=RAM)
-  4. the bootloader executes the Kernel with init=... option (default is /etc/preinit)
+#### Bootloader
 
-- Kernel
+Boot loader is a special program for booting the device for first time. Mostly, OpenWRT use grub to initialize and parses any options that are presented at the boot menu. After initialization done, it would terminate and give control to kernel.
 
-  1. the Kernel further bootstraps itself (sic!)
-  2. issues the command/op-code start_kernel
-  3. kernel scans the mtd partition rootfs for a valid superblock and mounts the SquashFS partition (which contains /etc) once found. (More info at technical.details)
-  4. /etc/preinit does pre-initialization setups (create directories, mount fs, /proc, /sys, ...)
-  5. the Kernel mounts any other partition (e.g. jffs2 partition) under rootfs (root file system). see flash.layout, preinit and root mount, and also udev make sure
-  6. if "INITRAMFS" is not defined, calls /sbin/init (the mother of all processes)
-  7. finally some kernel thread becomes the userspace init process
+In OpenWRT, the process happened as following:
 
-- Init
+1. the bootloader on the flash gets executed
+2. the bootloader performs the POST (Power-On-Self-Test), which is a low-level hardware initialization
+3. the bootloader decompresses the Kernel image from its (known!) location on the flash storage into main memory (=RAM)
+4. the bootloader executes the Kernel with init=... option (default is /etc/preinit)
 
-  The user space starts when kernel mounts rootfs and the very first program to run is (by default) /sbin/init. Please remember, that the interface between application and kernel is the clib and the syscalls it offers.
+#### Kernel
 
-  1. init reads /etc/inittab for the "sysinit" entry (default is "::sysinit:/etc/init.d/rcS S boot")
-  2. init calls /etc/init.d/rcS S boot
-  3. rcS executes the symlinks to the actual startup scripts located in /etc/rc.d/S##xxxxxx with option "start":
-  4. after rcS finishes, system should be up and running
+When bootloader has done its tasks, the control is passed to kernel. Kernel then do following operations:
+
+1. the Kernel further bootstraps itself (sic!)
+2. issues the command/op-code start_kernel
+3. kernel scans the mtd partition rootfs for a valid superblock and mounts the SquashFS partition (which contains /etc) once found. (More info at technical.details)
+4. /etc/preinit does pre-initialization setups (create directories, mount fs, /proc, /sys, ...)
+5. the Kernel mounts any other partition (e.g. jffs2 partition) under rootfs (root file system). see flash.layout, preinit and root mount, and also udev make sure
+6. if "INITRAMFS" is not defined, calls /sbin/init (the mother of all processes)
+7. finally some kernel thread becomes the userspace init process
+
+#### Init
+
+Init is a startup script invoked by kernel to starts some service / system non-related to kernel.
+
+The user space starts when kernel mounts rootfs and the very first program to run is (by default) /sbin/init. The interface between user space application and kernel is clib and the syscalls kernel offers.
+
+Init script is considered as the “Mother of All Processes” since its controls things like starting daemon, changing runlevels, setting up the console/pseudo consoles/tty access daemons, housekeeping chores, etc.
+
+In OpenWRT, following are the processes happen on Init process:
+
+1. init reads /etc/inittab for the "sysinit" entry (default is "::sysinit:/etc/init.d/rcS S boot")
+2. init calls /etc/init.d/rcS S boot
+3. rcS executes the symlinks to the actual startup scripts located in /etc/rc.d/S##xxxxxx with option "start":
+4. after rcS finishes, system should be up and running
 
 > https://wiki.openwrt.org/doc/techref/process.boot
+>
+> https://xathrya.id/2015/12/09/openwrt-boot-process/
 
 ## How To
 
