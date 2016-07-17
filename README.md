@@ -42,6 +42,14 @@ OpenWrt's goals:
 
 > https://prplworks.files.wordpress.com/2015/10/openwrt-adding-new-soc.pdf
 
+## OpenWrt Operating System Architecture
+
+![Operating System Architecture Compare](images/openwrt_os_arch_compare.png)
+
+> https://wiki.openwrt.org/doc/techref/procd
+>
+> https://wiki.openwrt.org/inbox/procd-init-scripts
+
 ## Download
 
 ## Branch and Codename
@@ -1428,6 +1436,8 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
     Generating index for package ./spi-tools_1-cc6a41fdcec60610703ba6db488c621c64952898_ramips_24kec.ipk
     Signing package index...
 ```
+
+### Boot Process
 
 ## How To
 
