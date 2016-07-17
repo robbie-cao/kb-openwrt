@@ -1483,6 +1483,10 @@ In OpenWRT, following are the processes happen on Init process:
 >
 > https://xathrya.id/2015/12/09/openwrt-boot-process/
 
+#### Compare with Ubuntu and Android
+
+![Ubuntu and Android Boot Sequence](images/boot-sequence-ubuntu-android.jpg)
+
 
 ## How To
 
