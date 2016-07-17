@@ -1439,6 +1439,34 @@ If you have added a device profile, and it isn't showing up in "make menuconfig"
 
 ### Boot Process
 
+- Bootloader
+
+  1. the bootloader on the flash gets executed
+  2. the bootloader performs the POST (Power-On-Self-Test), which is a low-level hardware initialization
+  3. the bootloader decompresses the Kernel image from its (known!) location on the flash storage into main memory (=RAM)
+  4. the bootloader executes the Kernel with init=... option (default is /etc/preinit)
+
+- Kernel
+
+  1. the Kernel further bootstraps itself (sic!)
+  2. issues the command/op-code start_kernel
+  3. kernel scans the mtd partition rootfs for a valid superblock and mounts the SquashFS partition (which contains /etc) once found. (More info at technical.details)
+  4. /etc/preinit does pre-initialization setups (create directories, mount fs, /proc, /sys, ...)
+  5. the Kernel mounts any other partition (e.g. jffs2 partition) under rootfs (root file system). see flash.layout, preinit and root mount, and also udev make sure
+  6. if "INITRAMFS" is not defined, calls /sbin/init (the mother of all processes)
+  7. finally some kernel thread becomes the userspace init process
+
+- Init
+
+  The user space starts when kernel mounts rootfs and the very first program to run is (by default) /sbin/init. Please remember, that the interface between application and kernel is the clib and the syscalls it offers.
+
+  1. init reads /etc/inittab for the "sysinit" entry (default is "::sysinit:/etc/init.d/rcS S boot")
+  2. init calls /etc/init.d/rcS S boot
+  3. rcS executes the symlinks to the actual startup scripts located in /etc/rc.d/S##xxxxxx with option "start":
+  4. after rcS finishes, system should be up and running
+
+> https://wiki.openwrt.org/doc/techref/process.boot
+
 ## How To
 
 ### Backup ART Partition (Factory Data)
