@@ -400,6 +400,7 @@ The main Makefile performs the following steps (once the configuration is done):
 
 The central network configuration is located in the file `/etc/config/network`. This configuration file
 is responsible for defining *switch VLANs*, *interface configurations* and *network routes*.
+
 After editing and saving /etc/config/network you need to execute
 
   ```
@@ -407,6 +408,104 @@ After editing and saving /etc/config/network you need to execute
   ```
 
 to stop and restart the network before any changes take effect. Rebooting the router is not necessary.
+
+#### Switch
+
+The switch section is responsible for partitioning the switch into several VLANs which appear as
+independent interfaces in the system although they share the same hardware.
+
+The example below shows a typical configuration:
+
+  ```
+  config 'switch' 'eth0'
+          option 'reset' '1'
+          option 'enable_vlan' '1'
+
+  config 'switch_vlan' 'eth0_1'
+          option 'device' 'eth0'
+          option 'vlan' '1'
+          option 'ports' '0 1 2 3 5t'
+
+  config 'switch_vlan' 'eth0_2'
+          option 'device' 'eth0'
+          option 'vlan' '2'
+          option 'ports' '4 5t'
+  ```
+
+#### Interfaces
+
+Sections of the type `interface` declare logical networks serving as containers for 
+IP address settings, aliases, routes, physical interface names and firewall rules - 
+they play a central role within the OpenWrt configuration concept.
+
+A minimal `interface` declaration consists of the following lines:
+
+  ```
+  config 'interface' 'wan'
+          option 'proto' 'dhcp'
+          option 'ifname' 'eth0.1'
+  ```
+
+- wan is a unique logical interface name
+- dhcp specifies the interface protocol, DHCP in this example
+- eth0.1 is the physical interface associated with this section
+
+The `interface` protocol may be one of the following:
+- static
+- dhcp
+- dhcpv6
+- ppp
+- pppoe
+- 3g
+- ...
+- none
+
+Depending on the used *interface protocol* several other options may be required for 
+a complete interface declaration. The corresponding options for each protocol are listed
+at [here](https://wiki.openwrt.org/doc/uci/network#options_valid_for_all_protocol_types).
+
+#### Aliases
+
+Alias sections can be used to define further IPv4 and IPv6 addresses for interfaces. They also allow combinations like DHCP on the main interface and a static IPv6 address in the alias, for example to deploy IPv6 on wan while keeping normal internet connectivity. Each interface can have multiple aliases attached to it.
+
+A minimal alias definition for a bridged interface might be (for a scenario without vlans):
+
+  ```
+  config interface lan
+          option 'ifname' 'eth0'
+          option 'type' 'bridge'
+          option 'proto' 'static'
+          option 'ipaddr' '192.168.1.1'
+          option 'netmask' '255.255.255.0'
+  ```
+
+  ```
+  config interface lan2
+         option 'ifname' 'br-lan'
+         option 'proto' 'static'
+         option 'ipaddr' '10.0.0.1'
+         option 'netmask' '255.255.255.0'
+  ```
+
+or for a non-bridge interface
+
+  ```
+  config interface lan
+          option 'ifname' 'eth0'
+          option 'proto' 'static'
+          option 'ipaddr' '192.168.1.1'
+          option 'netmask' '255.255.255.0'
+  ```
+
+  ```
+  config interface lan2
+         option 'ifname' 'eth0'
+         option 'proto' 'static'
+         option 'ipaddr' '10.0.0.1'
+         option 'netmask' '255.255.255.0'
+  ```
+
+> https://wiki.openwrt.org/doc/uci/network
 
 ## Concept
 
