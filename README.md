@@ -505,6 +505,41 @@ or for a non-bridge interface
          option 'netmask' '255.255.255.0'
   ```
 
+#### Examples
+
+**Bridge without IP**
+
+  ```
+  config 'interface' 'example'
+          option 'type'    'bridge'
+          option 'proto'   'none'
+          option 'ifname'  'eth0 eth1'
+          option 'auto'    '1'
+  ```
+
+**DHCP without default gateway**
+
+  ```
+  config 'interface' 'example'
+          option 'proto'   'dhcp'
+          option 'ifname'  'eth0'
+          option 'defaultroute' '0'
+  ```
+
+**Static IP configuration with multiple dnses**
+
+  ```
+  config 'interface' 'example'
+          option 'proto'     'static'
+          option 'ifname'    'eth0'
+          option 'ipaddr'    '192.168.1.200'
+          option 'netmask'   '255.255.255.0'
+          list   'dns'       '192.168.1.1'
+          list   'dns'       '192.168.10.1'
+          # the priority is: the last dns listed will be the first one
+          # to be chosen for the name resolution.
+  ```
+
 > https://wiki.openwrt.org/doc/uci/network
 
 ## Concept
