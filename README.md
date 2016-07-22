@@ -394,6 +394,20 @@ The main Makefile performs the following steps (once the configuration is done):
 
 > http://free-electrons.com/doc/training/buildroot/buildroot-slides.pdf
 
+## Config
+
+### Network Configuration
+
+The central network configuration is located in the file `/etc/config/network`. This configuration file
+is responsible for defining *switch VLANs*, *interface configurations* and *network routes*.
+After editing and saving /etc/config/network you need to execute
+
+  ```
+  /etc/init.d/network reload
+  ```
+
+to stop and restart the network before any changes take effect. Rebooting the router is not necessary.
+
 ## Concept
 
 ## Source Analysis
