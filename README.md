@@ -489,6 +489,10 @@ Other                 |
 ................      | ................
 more ...              | ................
 
+### NotUCI Configuration
+
+> https://wiki.openwrt.org/doc/howto/notuci.config
+
 ### Network Configuration
 
 The central network configuration is located in the file `/etc/config/network`. This configuration file
