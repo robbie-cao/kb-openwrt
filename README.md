@@ -1,4 +1,4 @@
-# Learning OpenWrt
+# OpenWrt KB & BKM
 
 ## What's OpenWrt
 
