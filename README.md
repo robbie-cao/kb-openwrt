@@ -50,8 +50,6 @@ OpenWrt's goals:
 >
 > https://wiki.openwrt.org/inbox/procd-init-scripts
 
-## Download
-
 ## Branch and Codename
 
 The code names of OpenWrt branches are named after alcoholic beverages, usually including their recipes in the MOTD as well, cf. White Russian, Kamikaze, Backfire, Attitude Adjustment, Barrier Breaker.
@@ -70,7 +68,7 @@ Attitude Adjustment | 12.09      |
 
 ## Build
 
-### Installation
+### Toolchain
 
 OpenWrt build system is the buildsystem for the OpenWrt Linux distribution. OpenWrt build system works on Linux, BSD or MacOSX operating system. A case-sensitive filesystem is required.
 
@@ -83,6 +81,12 @@ It is recommended that you use a **Linux** distribution (Debian or Ubuntu), eith
   ```
 
 > https://wiki.openwrt.org/doc/howto/buildroot.exigence
+
+### Download
+
+  ```
+  git clone https://git.openwrt.org/openwrt.git
+  ```
 
 ### Quick Start
 
