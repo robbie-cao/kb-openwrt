@@ -70,6 +70,20 @@ Attitude Adjustment | 12.09      |
 
 ## Build
 
+### Installation
+
+OpenWrt build system is the buildsystem for the OpenWrt Linux distribution. OpenWrt build system works on Linux, BSD or MacOSX operating system. A case-sensitive filesystem is required.
+
+It is recommended that you use a **Linux** distribution (Debian or Ubuntu), either a standalone installation or one running in a virtual environment (VirtualBox or VMware).
+
+  ```
+  sudo apt-get update
+  sudo apt-get install git-core build-essential libssl-dev libncurses5-dev unzip gawk
+  sudo apt-get install subversion mercurial
+  ```
+
+> https://wiki.openwrt.org/doc/howto/buildroot.exigence
+
 ### Quick Start
 
   ```
