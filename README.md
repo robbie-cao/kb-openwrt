@@ -358,7 +358,7 @@ Each directory contains at least 2 files:
 
 The main Makefile performs the following steps (once the configuration is done):
 - Create all the output directories: staging, target, build, etc. in the output directory (output/ by default, another value can be specified using O=)
-- Generate the toolchain target.When an internal toolchain is used, this means generating the cross-compilation toolchain. When an external toolchain is used, this means checking the features of the external toolchain and importing it into the Buildroot environment.
+- Generate the toolchain target. When an internal toolchain is used, this means generating the cross-compilation toolchain. When an external toolchain is used, this means checking the features of the external toolchain and importing it into the Buildroot environment.
 - Generate all the targets listed in the TARGETS variable. This variable is filled by all the individual components' Makefiles. Generating these targets will trigger the compilation of the userspace packages (libraries, programs), the kernel, the bootloader and the generation of the root filesystem images, depending on the configuration.
 
 > https://buildroot.org/downloads/manual/manual.html
@@ -668,6 +668,92 @@ or for a non-bridge interface
 ## Source Analysis
 
 ### feeds
+
+In OpenWrt, a "feed" is a collection of packages which share a common location. Feeds may reside on a remote server, in a version control system, on the local filesystem, or in any other location addressable by a single name (path/URL) over a protocol with a supported feed method.
+
+The list of usable feeds is configured from the feeds.conf file (or feeds.conf.default when feeds.conf does not exist). This file contains a list of feeds, one per line, and any number of empty lines. Comments begin with # and extend to the end of a line and are ignored during parsing. Each feed line consists of 3 whitespace-separated components: The feed method, the feed name, and the feed source.
+
+Example:
+
+  ```
+  src-git packages https://github.com/openwrt/packages.git
+  src-git luci http://git.openwrt.org/project/luci.git
+  src-git routing https://github.com/openwrt-routing/packages.git
+  src-git telephony http://git.openwrt.org/feed/telephony.git
+  src-git management https://github.com/openwrt-management/packages.git
+  #src-git oldpackages http://git.openwrt.org/packages.git
+  #src-svn xwrt http://x-wrt.googlecode.com/svn/trunk/package
+  #src-svn phone svn://svn.openwrt.org/openwrt/feeds/phone
+  #src-svn efl svn://svn.openwrt.org/openwrt/feeds/efl
+  #src-svn xorg svn://svn.openwrt.org/openwrt/feeds/xorg
+  #src-svn desktop svn://svn.openwrt.org/openwrt/feeds/desktop
+  #src-svn xfce svn://svn.openwrt.org/openwrt/feeds/xfce
+  #src-svn lxde svn://svn.openwrt.org/openwrt/feeds/lxde
+  #src-link custom /usr/src/openwrt/custom-feed
+  ```
+
+  ```
+  src-git packages https://github.com/reponame/packages.git;special_branch
+  src-git packages https://github.com/reponame/packages.git^commithash
+  ```
+
+The following methods are supported:
+
+Method     | Function
+---        | ---
+src-bzr    | Data is downloaded from the source path/URL using bzr
+src-cpy    | Data is copied from the source path
+src-darcs  | Data is downloaded from the source path/URL using darcs
+src-git    | Data is downloaded from the source path/URL using git. 1) 2)
+src-gitsvn | Bidirectional operation between a Subversion repository and git
+src-hg     | Data is downloaded from the source path/URL using hg
+src-link   | A symlink to the source path is created
+src-svn    | Data is downloaded from the source path/URL using svn
+
+Feed commands:
+- clean
+- install
+- list
+- search
+- uninstall
+- update
+
+  ```
+  Usage: scripts/feeds <command> [options]
+
+  Commands:
+          list [options]: List feeds, their content and revisions (if installed)
+          Options:
+              -n :            List of feed names.
+              -s :            List of feed names and their URL.
+              -r <feedname>:  List packages of specified feed.
+              -d <delimiter>: Use specified delimiter to distinguish rows (default: spaces)
+              -f :            List feeds in feeds.conf compatible format (when using -s).
+
+          install [options] <package>: Install a package
+          Options:
+              -a :           Install all packages from all feeds or from the specified feed using the -p option.
+              -p <feedname>: Prefer this feed when installing packages.
+              -d <y|m|n>:    Set default for newly installed packages.
+              -f :           Install will be forced even if the package exists in core OpenWrt (override)
+
+          search [options] <substring>: Search for a package
+          Options:
+              -r <feedname>: Only search in this feed
+
+          uninstall -a|<package>: Uninstall a package
+          Options:
+              -a :           Uninstalls all packages.
+
+          update -a|<feedname(s)>: Update packages and lists of feeds in feeds.conf .
+          Options:
+              -a :           Update all feeds listed within feeds.conf. Otherwise the specified feeds will be updated.
+              -i :           Recreate the index only. No feed update from repository is performed.
+
+          clean:             Remove downloaded/generated files.
+  ```
+
+> https://wiki.openwrt.org/doc/devel/feeds
 
 ### scripts
 
