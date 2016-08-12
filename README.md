@@ -335,11 +335,16 @@ the target platform and architecture is specified, user-space packages selected,
 Buildroot will do the image building through the following steps (once the configuration is done):
 
 1. Download the cross-compilation tools, kernel headers, etc. and
-2. Set up the staging directory (`staging_dir/`). This is where the cross-compilation toolchain will be installed. If you want to use the same cross-compilation toolchain for other purposes, such as compiling third-party applications, you can find the cross-compiler tools in this directory, and then use arch-linux-gcc to compile your application.
-3. Create the download directory (`dl/` by default). This is where the tarballs will be downloaded.
-4. Create the build directory (`build_dir/`). This is where all user-space tools while be compiled.
-5. Create the target directory (`build_dir/target-arch/root` by default) and the target filesystem skeleton. This directory will contain the final root filesystem.
-6. Install the user-space packages to the root file system and compress the whole root file system with proper format. The result firmware image is generated in `bin/`.
+2. Set up the staging directory (`staging_dir/`).
+   This is where the cross-compilation toolchain will be installed. If you want to use the same cross-compilation toolchain for other purposes, such as compiling third-party applications, you can find the cross-compiler tools in this directory, and then use arch-linux-gcc to compile your application.
+3. Create the download directory (`dl/` by default).
+   This is where the tarballs will be downloaded.
+4. Create the build directory (`build_dir/`).
+   This is where all user-space tools while be compiled.
+5. Create the target directory (`build_dir/target-arch/root` by default) and the target filesystem skeleton.
+   This directory will contain the final root filesystem.
+6. Install the user-space packages to the root file system and compress the whole root file system with proper format.
+   The result firmware image is generated in `bin/`.
 
 > http://www.ccs.neu.edu/home/noubir/Courses/CS6710/S12/material/OpenWrt_Dev_Tutorial.pdf
 
