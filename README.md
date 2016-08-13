@@ -1917,6 +1917,36 @@ In OpenWRT, following are the processes happen on Init process:
 
 > https://wiki.openwrt.org/doc/howto/restore_art_partition
 
+### Integrate Kernel Git Repo in OpenWrt Environment
+
+The OpenWrt build system supports pulling a kernel from a git repository, or
+even using an "external" kernel directory. In order to use these features, run
+the following:
+
+  ```
+  make menuconfig
+    -> Advanced configuration options (for developers)
+       -> Use external kernel tree
+       -or-
+       -> Enter git repository to clone
+  ```
+
+The string should contain the full git clone url.
+
+Note that the kernel version is being assumed as the kernel version
+specified in your target's Makefile, so you might want to adapt it.
+This is important for the paths for some kernel modules, as well as
+which target/linux/*/config-<version> get used for the kernel config.
+Also you need to apply OpenWrt patches by hand if you need them,
+especially if you want to build flashable images (for ramdisk images
+you usually don't need much, e.g. I can build and boot a vanilla linux
+bcm63xx ramdisk image if the kernel is new enough).
+
+Some packages also depend on OpenWrt kernel patches, like iptables.
+
+
+> http://openwrt-devel.openwrt.narkive.com/9ak1CBMO/integrate-kernel-git-repo-in-openwrt-environment
+
 ## Resources
 
 - [OpenWrt Wiki](https://wiki.openwrt.org)
