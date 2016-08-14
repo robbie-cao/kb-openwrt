@@ -1936,13 +1936,13 @@ The string should contain the full git clone url.
 Note that the kernel version is being assumed as the kernel version
 specified in your target's Makefile, so you might want to adapt it.
 This is important for the paths for some kernel modules, as well as
-which target/linux/*/config-<version> get used for the kernel config.
+which `target/linux/*/config-<version>` get used for the kernel config.
 Also you need to apply OpenWrt patches by hand if you need them,
 especially if you want to build flashable images (for ramdisk images
 you usually don't need much, e.g. I can build and boot a vanilla linux
 bcm63xx ramdisk image if the kernel is new enough).
 
-Some packages also depend on OpenWrt kernel patches, like iptables.
+Some packages also depend on OpenWrt kernel patches, like `iptables`.
 
 
 > http://openwrt-devel.openwrt.narkive.com/9ak1CBMO/integrate-kernel-git-repo-in-openwrt-environment
