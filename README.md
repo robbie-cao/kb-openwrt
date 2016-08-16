@@ -418,6 +418,14 @@ The main Makefile performs the following steps (once the configuration is done):
 
 > http://free-electrons.com/doc/training/buildroot/buildroot-slides.pdf
 
+### Misc
+
+- Buildroot is really an integration utility. Once a package has been built, it is not rebuilt, even if its source code changes.
+- When working on the development of a component, it is usually more convenient to build it outside of Buildroot, for a quicker compile/test/debug cycle.
+- The upcoming source directory override feature, covered later, makes it easier to use Buildroot during development.
+
+> http://elinux.org/images/2/2a/Using-buildroot-real-project.pdf
+
 ## Config
 
 ### The UCI System
