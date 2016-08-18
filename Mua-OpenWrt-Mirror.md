@@ -56,6 +56,6 @@ $ make menuconfig
 $ cp -fr /home/mua/dl .
 
 # start make
-$ make V=s
+$ make -j2 V=s
 ```
 
