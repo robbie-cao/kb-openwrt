@@ -52,6 +52,9 @@ $ cp -f config.dev.kernel .config
 -or-
 $ make menuconfig
 
+# copy download src/tool/packages tarball
+$ cp -fr /home/mua/dl .
+
 # start make
 $ make V=s
 ```
