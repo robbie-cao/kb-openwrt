@@ -92,10 +92,6 @@ New password:				(-> enter password, can be simple leave as blank)
 Bad password: too short
 Retype password:
 Password for root changed by root
-
-
-# host side
-scp root@192.168.31.xxx:/tmp/factory.backup.bin .
 ```
 
 
@@ -190,5 +186,91 @@ $ cp factory.backup.bin /to/safe/storage
 
 ### via `sysupgrade`
 
+**In Target**
+
+1. Setup target ip address and account
+
+```
+-> set network (connect board to router/switch with cable)
+root@Widora:/# ifconfig br-lan 192.168.31.224
+
+-> check network setting
+root@Widora:/# ping 192.168.31.1
+PING 192.168.31.1 (192.168.31.1): 56 data bytes
+64 bytes from 192.168.31.1: seq=0 ttl=64 time=1.009 ms
+64 bytes from 192.168.31.1: seq=1 ttl=64 time=0.481 ms
+^C
+--- 192.168.31.1 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 0.481/0.745/1.009 ms
+
+-> set root password
+root@Widora:/# passwd root
+Changing password for root
+New password:				(-> enter password, can be simple leave as blank)
+Bad password: too short
+Retype password:
+Password for root changed by root
+```
+
+2. Copy image to target
+
+   **using `scp`**
+
+   ```
+   $ scp bin/ramips/openwrt-ramips-mt7688-LinkIt7688-squashfs-sysupgrade.bin root@192.168.31.224:/tmp/ow-upgrade.bin
+   root@192.168.31.224's password: 
+   openwrt-ramips-mt7688-LinkIt7688-squashfs-sysupgrade.bin                            100%   14MB   2.3MB/s   00:06    
+   ```
+
+   **using `nc`**
+
+   ```
+   # on linux pc
+   $ cat bin/ramips/openwrt-ramips-mt7688-LinkIt7688-squashfs-sysupgrade.bin | pv -b | nc -l -p 12345
+
+   # on target
+   $ nc 192.168.1.111 12345 > /tmp/ow-upgrade.bin
+   ```
+
+   NOTE:
+
+   - Port 12345 and IP address 192.168.1.111 are just examples.
+   - The command `pv -b` is optional for tracking progress but maybe you have to install `pv` to your system previously.
+
+3. Write image to flash
+
+   ```
+   root@mylinkit:/# sysupgrade -v /tmp/ow-upgrade.bin
+   Saving config files...
+   etc/avahi/avahi-daemon.conf
+   etc/avrdude.conf
+   ...
+   etc/udev/udev.conf
+   killall: watchdog: no process killed
+   Sending TERM to remaining processes ... uhttpd smbd nmbd avahi-daemon mountd ntpd dnsmasq ubusd logd rpcd netifd odhcpd
+   Sending KILL to remaining processes ...
+   Switching to ramdisk...
+   Performing system upgrade...
+   Unlocking firmware ...
+
+   Writing from <stdin> to firmware ...  [w]
+   Appending jffs2 data from /tmp/sysupgrade.tgz to firmwar
+   Upgrade completed
+   Rebooting system...
+   [ 2186.460000] reboot: Restarting system
+
+   ```
+
+4. Target will automatically reboot after flashing done
+
 ### via `mtd`
+
+Same steps as `sysupgraade` except:
+
+```
+$ mtd -r write /tmp/ow-upgrade.bin firmware
+```
+
+> https://wiki.openwrt.org/doc/howto/generic.sysupgrade
 
