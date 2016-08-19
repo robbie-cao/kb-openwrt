@@ -54,3 +54,57 @@ mountd(pid1036) on /tmp/run/mountd type autofs (rw,relatime,fd=5,pgrp=1033,timeo
 
 > https://wiki.openwrt.org/doc/techref/flash.layout
 
+## Backup Factory Data
+
+**In Target**
+
+```
+-> check mtd partitions
+root@Widora:/# cat /proc/mtd
+dev:    size   erasesize  name
+mtd0: 00030000 00010000 "u-boot"
+mtd1: 00010000 00010000 "u-boot-env"
+mtd2: 00010000 00010000 "factory"
+mtd3: 00fb0000 00010000 "firmware"
+mtd4: 00119d29 00010000 "kernel"
+mtd5: 00e962d7 00010000 "rootfs"
+
+-> backup factory partition
+root@Widora:/# dd if=/dev/mtd2 of=/tmp/factory.backup.bin
+128+0 records in
+128+0 records out
+
+-> set network (connect board to router/switch with cable)
+root@Widora:/# ifconfig br-lan 192.168.31.224
+root@Widora:/# ping 192.168.31.1
+PING 192.168.31.1 (192.168.31.1): 56 data bytes
+64 bytes from 192.168.31.1: seq=0 ttl=64 time=1.009 ms
+64 bytes from 192.168.31.1: seq=1 ttl=64 time=0.481 ms
+^C
+--- 192.168.31.1 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 0.481/0.745/1.009 ms
+
+-> set root password
+root@Widora:/# passwd root
+Changing password for root
+New password:				(-> enter password, can be simple leave as blank)
+Bad password: too short
+Retype password:
+Password for root changed by root
+
+
+# host side
+scp root@192.168.31.xxx:/tmp/factory.backup.bin .
+```
+
+
+**Host Side**
+
+```
+$ scp root@192.168.31.xxx:/tmp/factory.backup.bin .
+root@192.168.31.224's password: 
+factory.backup.bin                     100%   64KB  64.0KB/s   00:00  
+$ cp factory.backup.bin /to/safe/storage
+```
+
