@@ -108,3 +108,87 @@ factory.backup.bin                     100%   64KB  64.0KB/s   00:00
 $ cp factory.backup.bin /to/safe/storage
 ```
 
+## Flashing Image
+
+### via `tftp`
+
+1. Setup tftp server (http://askubuntu.com/questions/201505/how-do-i-install-and-run-a-tftp-server)
+
+   >  Ignore if setup already.
+
+2. Make your own image
+
+3. Put image to tftp server folder (`/tftpboot`)
+
+   ```
+   $ cp -f bin/ramips/openwrt-ramips-mt7688-LinkIt7688-squashfs-sysupgrade.bin /tftpboot/w0
+   ```
+
+   **Suggest to use short file name in tftp server folder for convenient use in `uboot`.**
+
+4. Power on target and enter uboot tftp boot mode
+
+   ```
+   Continuing normal boot...
+
+   Please choose the operation:
+      1: Load system code to SDRAM via TFTP.
+      2: Load system code then write to Flash via TFTP.
+      3: Boot system code via Flash (default).
+      4: Entr boot command line interface.
+      5: Entr ALL LED test mode.
+      6: Entr Web failsafe mode.
+      7: Load Boot Loader code then write to Flash via Serial.
+      9: Load Boot Loader code then write to Flash via TFTP.
+   ```
+
+   Select **1** or **2** once you see above output in terminal.
+
+5. Connect target board to router with network cable
+
+6. Setup IP address (both target and tftp server) and image file
+
+   ```
+    Please Input new ones /or Ctrl-C to discard
+           Input device IP (192.168.31.224) ==:192.168.31.224
+           Input server IP (192.168.31.59) ==:192.168.31.59
+           Input Linux Kernel filename (w0) ==:w0
+   ```
+
+7. Start loading image via tftp and boot
+
+   ```
+    netboot_common, argc= 3
+
+    NetTxPacket = 0x87FE6D00
+
+    KSEG1ADDR(NetTxPacket) = 0xA7FE6D00
+
+    NetLoop,call eth_halt !
+
+    NetLoop,call eth_init !
+   Trying Eth0 (10/100-M)
+
+    Waitting for RX_DMA_BUSY status Start... done
+
+
+    ETH_STATE_ACTIVE!!
+   TFTP from server 192.168.31.59; our IP address is 192.168.31.224
+   Filename 'w0'.
+
+    TIMEOUT_COUNT=10,Load address: 0x80a00000
+   Loading: Got ARP REPLY, set server/gtwy eth addr (1c:1b:0d:0a:db:c6)
+   Got it
+   #################################################################
+            #################################################################
+            #################################################################
+            #################################################################
+            #################################################################
+            #################################################################
+   ```
+
+
+### via `sysupgrade`
+
+### via `mtd`
+
