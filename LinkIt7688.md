@@ -190,28 +190,28 @@ $ cp factory.backup.bin /to/safe/storage
 
 1. Setup target ip address and account
 
-```
--> set network (connect board to router/switch with cable)
-root@Widora:/# ifconfig br-lan 192.168.31.224
+   ```
+   -> set network (connect board to router/switch with cable)
+   root@Widora:/# ifconfig br-lan 192.168.31.224
 
--> check network setting
-root@Widora:/# ping 192.168.31.1
-PING 192.168.31.1 (192.168.31.1): 56 data bytes
-64 bytes from 192.168.31.1: seq=0 ttl=64 time=1.009 ms
-64 bytes from 192.168.31.1: seq=1 ttl=64 time=0.481 ms
-^C
---- 192.168.31.1 ping statistics ---
-2 packets transmitted, 2 packets received, 0% packet loss
-round-trip min/avg/max = 0.481/0.745/1.009 ms
+   -> check network setting
+   root@Widora:/# ping 192.168.31.1
+   PING 192.168.31.1 (192.168.31.1): 56 data bytes
+   64 bytes from 192.168.31.1: seq=0 ttl=64 time=1.009 ms
+   64 bytes from 192.168.31.1: seq=1 ttl=64 time=0.481 ms
+   ^C
+   --- 192.168.31.1 ping statistics ---
+   2 packets transmitted, 2 packets received, 0% packet loss
+   round-trip min/avg/max = 0.481/0.745/1.009 ms
 
--> set root password
-root@Widora:/# passwd root
-Changing password for root
-New password:				(-> enter password, can be simple leave as blank)
-Bad password: too short
-Retype password:
-Password for root changed by root
-```
+   -> set root password
+   root@Widora:/# passwd root
+   Changing password for root
+   New password:				(-> enter password, can be simple leave as blank)
+   Bad password: too short
+   Retype password:
+   Password for root changed by root
+   ```
 
 2. Copy image to target
 
