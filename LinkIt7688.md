@@ -285,7 +285,10 @@ $ git clone git@git.muabaobao.com:depot/mua-ow-hello.git package/mua-ow-hello
 $ make package/mua-ow-hello/{download,prepare,compile}
 
 # check result
-$ ls ls build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/
+$ ls build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/
+function_key  function_key.c  function_key.o  ipkg-ramips_24kec  Makefile
+$ ls bin/ramips/packages/base
+function_key_1.0-1_ramips_24kec.ipk
 ```
 
 #### Run and Debug
@@ -307,6 +310,37 @@ Gpio is 0
 Gpio is 0
 Gpio is 0
 ```
+
+#### Using ipk
+
+**Push ipk to target**
+
+```
+$ scp bin/ramips/packages/base/function_key_1.0-1_ramips_24kec.ipk root@192.168.31.224:/tmp/
+```
+
+**Install ipk and run**
+
+```
+root@mylinkit:/# opkg install tmp/function_key_1.0-1_ramips_24kec.ipk 
+Installing function_key (1.0-1) to root...
+Configuring function_key.
+root@mylinkit:/# 
+root@mylinkit:/# 
+root@mylinkit:/# 
+root@mylinkit:/# function_key 
+root@mylinkit:/# ls /usr/bin/function_key 
+/usr/bin/function_key
+root@mylinkit:/# /usr/bin/function_key 
+MRAA Version: v0.8.0
+Starting Read on IO6
+Gpio is 1
+Gpio is 1
+Gpio is 1
+Gpio is 1
+
+```
+
 
 > https://wiki.openwrt.org/doc/howto/obtain.firmware.sdk
 
