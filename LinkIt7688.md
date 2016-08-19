@@ -274,3 +274,37 @@ $ mtd -r write /tmp/ow-upgrade.bin firmware
 
 > https://wiki.openwrt.org/doc/howto/generic.sysupgrade
 
+### Using SDK
+
+#### Build
+
+```
+$ tar jxvf OpenWrt-SDK-ramips-mt7688_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2
+$ cd OpenWrt-SDK-ramips-mt7688_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64
+$ git clone git@git.muabaobao.com:depot/mua-ow-hello.git package/mua-ow-hello
+$ make package/mua-ow-hello/{download,prepare,compile}
+
+# check result
+$ ls ls build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/
+```
+
+#### Run and Debug
+
+**Push execute program to target**
+
+```
+$ scp build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/function_key root@192.168.31.224:/usr/local/bin
+```
+
+**Run on target**
+
+```
+root@mylinkit:/# 
+root@mylinkit:/# /usr/local/bin/function_key 
+MRAA Version: v0.8.0
+Starting Read on IO6
+Gpio is 0
+Gpio is 0
+Gpio is 0
+```
+
