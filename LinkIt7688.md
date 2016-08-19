@@ -308,3 +308,5 @@ Gpio is 0
 Gpio is 0
 ```
 
+> https://wiki.openwrt.org/doc/howto/obtain.firmware.sdk
+
