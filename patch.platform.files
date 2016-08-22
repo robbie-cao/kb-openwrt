@@ -1,0 +1,159 @@
+On branch p/ow
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   arch/mips/Kconfig
+	modified:   arch/mips/include/asm/mach-ralink/mt7620.h
+	modified:   arch/mips/include/asm/mach-ralink/ralink_regs.h
+	modified:   arch/mips/include/asm/mach-ralink/rt305x.h
+	modified:   arch/mips/include/asm/mach-ralink/rt3883.h
+	modified:   arch/mips/kernel/cevt-r4k.c
+	modified:   arch/mips/kernel/head.S
+	modified:   arch/mips/kernel/mips-cm.c
+	modified:   arch/mips/kernel/setup.c
+	modified:   arch/mips/kernel/vmlinux.lds.S
+	modified:   arch/mips/pci/Makefile
+	modified:   arch/mips/ralink/Kconfig
+	modified:   arch/mips/ralink/Makefile
+	modified:   arch/mips/ralink/Platform
+	modified:   arch/mips/ralink/cevt-rt3352.c
+	modified:   arch/mips/ralink/clk.c
+	modified:   arch/mips/ralink/common.h
+	modified:   arch/mips/ralink/early_printk.c
+	modified:   arch/mips/ralink/irq.c
+	modified:   arch/mips/ralink/mt7620.c
+	modified:   arch/mips/ralink/of.c
+	modified:   arch/mips/ralink/prom.c
+	modified:   arch/mips/ralink/reset.c
+	modified:   arch/mips/ralink/rt288x.c
+	modified:   arch/mips/ralink/rt305x.c
+	modified:   arch/mips/ralink/rt3883.c
+	modified:   arch/mips/ralink/timer.c
+	modified:   drivers/dma/Kconfig
+	modified:   drivers/dma/Makefile
+	modified:   drivers/gpio/Kconfig
+	modified:   drivers/gpio/Makefile
+	modified:   drivers/gpio/gpiolib-of.c
+	modified:   drivers/gpio/gpiolib-sysfs.c
+	modified:   drivers/i2c/busses/Kconfig
+	modified:   drivers/i2c/busses/Makefile
+	modified:   drivers/media/usb/uvc/uvc_driver.c
+	modified:   drivers/media/usb/uvc/uvc_status.c
+	modified:   drivers/media/usb/uvc/uvc_video.c
+	modified:   drivers/media/usb/uvc/uvcvideo.h
+	modified:   drivers/misc/Makefile
+	modified:   drivers/mmc/host/Kconfig
+	modified:   drivers/mmc/host/Makefile
+	modified:   drivers/mtd/chips/cfi_cmdset_0002.c
+	modified:   drivers/mtd/devices/m25p80.c
+	modified:   drivers/mtd/maps/Kconfig
+	modified:   drivers/mtd/maps/Makefile
+	modified:   drivers/mtd/mtdpart.c
+	modified:   drivers/mtd/nand/Kconfig
+	modified:   drivers/mtd/nand/Makefile
+	modified:   drivers/mtd/nand/nand_base.c
+	modified:   drivers/mtd/nand/nand_bbt.c
+	modified:   drivers/net/ethernet/Kconfig
+	modified:   drivers/net/ethernet/Makefile
+	modified:   drivers/net/ethernet/ralink/esw_rt3052.c
+	modified:   drivers/net/phy/phy.c
+	modified:   drivers/phy/Kconfig
+	modified:   drivers/phy/Makefile
+	modified:   drivers/pinctrl/Kconfig
+	modified:   drivers/pinctrl/Makefile
+	modified:   drivers/pwm/Kconfig
+	modified:   drivers/pwm/Makefile
+	modified:   drivers/spi/Kconfig
+	modified:   drivers/spi/Makefile
+	modified:   drivers/tty/serial/8250/8250_core.c
+	modified:   drivers/tty/serial/8250/Kconfig
+	modified:   drivers/tty/serial/of_serial.c
+	modified:   drivers/tty/serial/serial_core.c
+	modified:   drivers/usb/core/hcd-pci.c
+	modified:   drivers/usb/core/hub.c
+	modified:   drivers/usb/core/port.c
+	modified:   drivers/usb/dwc2/hcd.c
+	modified:   drivers/usb/host/Kconfig
+	modified:   drivers/usb/host/Makefile
+	modified:   drivers/usb/host/ehci-platform.c
+	modified:   drivers/usb/host/ohci-platform.c
+	modified:   drivers/usb/host/pci-quirks.h
+	modified:   drivers/usb/host/xhci-dbg.c
+	modified:   drivers/usb/host/xhci-mem.c
+	modified:   drivers/usb/host/xhci-plat.c
+	modified:   drivers/usb/host/xhci-ring.c
+	modified:   drivers/usb/host/xhci.c
+	modified:   drivers/usb/host/xhci.h
+	modified:   drivers/watchdog/Kconfig
+	modified:   drivers/watchdog/Makefile
+	modified:   include/asm-generic/gpio.h
+	modified:   include/linux/dmaengine.h
+	modified:   include/linux/gpio/consumer.h
+	modified:   include/linux/phy.h
+	modified:   sound/soc/Kconfig
+	modified:   sound/soc/Makefile
+	modified:   sound/soc/codecs/Kconfig
+	modified:   sound/soc/codecs/wm8960.c
+	modified:   sound/soc/codecs/wm8960.h
+	modified:   sound/soc/soc-core.c
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	Documentation/devicetree/bindings/gpio/gpio-ralink.txt
+	Documentation/devicetree/bindings/i2c/i2c-ralink.txt
+	Documentation/devicetree/bindings/spi/spi-rt2880.txt
+	arch/mips/configs/mt7621_defconfig
+	arch/mips/include/asm/mach-ralink/gpio.h
+	arch/mips/include/asm/mach-ralink/irq.h
+	arch/mips/include/asm/mach-ralink/mt7621.h
+	arch/mips/include/asm/mach-ralink/mt7621/
+	arch/mips/include/asm/mach-ralink/pinmux.h
+	arch/mips/pci/pci-mt7620.c
+	arch/mips/pci/pci-mt7621.c
+	arch/mips/pci/pci-rt2880.c
+	arch/mips/ralink/bootrom.c
+	arch/mips/ralink/ill_acc.c
+	arch/mips/ralink/irq-gic.c
+	arch/mips/ralink/malta-amon.c
+	arch/mips/ralink/mt7621.c
+	drivers/dma/ralink-gdma.c
+	drivers/gpio/gpio-mt7621.c
+	drivers/gpio/gpio-ralink.c
+	drivers/i2c/busses/i2c-mt7621.c
+	drivers/i2c/busses/i2c-ralink.c
+	drivers/misc/linkit.c
+	drivers/mmc/host/mtk-mmc/
+	drivers/mtd/maps/ralink_nand.c
+	drivers/mtd/maps/ralink_nand.h
+	drivers/mtd/nand/bmt.c
+	drivers/mtd/nand/bmt.h
+	drivers/mtd/nand/dev-nand.c
+	drivers/mtd/nand/mt6575_typedefs.h
+	drivers/mtd/nand/mtk_nand.c
+	drivers/mtd/nand/mtk_nand.h
+	drivers/mtd/nand/nand_def.h
+	drivers/mtd/nand/nand_device_list.h
+	drivers/mtd/nand/partition.h
+	drivers/phy/phy-ralink-usb.c
+	drivers/pinctrl/pinctrl-rt2880.c
+	drivers/pwm/pwm-mediatek.c
+	drivers/spi/spi-mt7621.c
+	drivers/spi/spi-rt2880.c
+	drivers/usb/host/mtk-phy-7621.c
+	drivers/usb/host/mtk-phy-7621.h
+	drivers/usb/host/mtk-phy-ahb.c
+	drivers/usb/host/mtk-phy.c
+	drivers/usb/host/mtk-phy.h
+	drivers/usb/host/xhci-mtk-power.c
+	drivers/usb/host/xhci-mtk-power.h
+	drivers/usb/host/xhci-mtk-scheduler.c
+	drivers/usb/host/xhci-mtk-scheduler.h
+	drivers/usb/host/xhci-mtk.c
+	drivers/usb/host/xhci-mtk.h
+	drivers/watchdog/mt7621_wdt.c
+	sound/soc/mtk/
+	sound/soc/ralink/
+
+no changes added to commit (use "git add" and/or "git commit -a")

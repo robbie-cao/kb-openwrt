@@ -1,0 +1,405 @@
+On branch p/ow
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   .gitignore
+	modified:   Documentation/devicetree/bindings/bus/bcma.txt
+	modified:   MAINTAINERS
+	modified:   Makefile
+	modified:   arch/arm/Makefile
+	modified:   arch/arm/boot/compressed/Makefile
+	modified:   arch/arm/kernel/module.c
+	modified:   arch/arm/kernel/vmlinux.lds.S
+	modified:   arch/arm/tools/mach-types
+	modified:   arch/avr32/kernel/module.c
+	modified:   arch/ia64/kernel/module.c
+	modified:   arch/mips/Kconfig
+	modified:   arch/mips/Makefile
+	modified:   arch/mips/boot/compressed/string.c
+	modified:   arch/mips/include/asm/dma-mapping.h
+	modified:   arch/mips/include/asm/fpu.h
+	modified:   arch/mips/include/asm/fpu_emulator.h
+	modified:   arch/mips/include/asm/mach-generic/spaces.h
+	modified:   arch/mips/include/asm/module.h
+	modified:   arch/mips/include/asm/string.h
+	modified:   arch/mips/kernel/head.S
+	modified:   arch/mips/kernel/machine_kexec.c
+	modified:   arch/mips/kernel/module.c
+	modified:   arch/mips/kernel/prom.c
+	modified:   arch/mips/kernel/relocate_kernel.S
+	modified:   arch/mips/kernel/vmlinux.lds.S
+	modified:   arch/mips/lib/Makefile
+	modified:   arch/mips/mm/cache.c
+	modified:   arch/mips/mm/dma-default.c
+	modified:   arch/parisc/kernel/module.c
+	modified:   arch/powerpc/Makefile
+	modified:   arch/powerpc/boot/Makefile
+	modified:   arch/s390/kernel/module.c
+	modified:   arch/tile/kernel/module.c
+	modified:   arch/x86/vdso/vdso2c.c
+	modified:   crypto/Kconfig
+	modified:   crypto/Makefile
+	modified:   crypto/algboss.c
+	modified:   drivers/ata/Kconfig
+	modified:   drivers/ata/libata-core.c
+	modified:   drivers/atm/solos-pci.c
+	modified:   drivers/base/Kconfig
+	modified:   drivers/base/regmap/Kconfig
+	modified:   drivers/base/regmap/Makefile
+	modified:   drivers/base/regmap/regmap.c
+	modified:   drivers/bcma/Kconfig
+	modified:   drivers/bcma/Makefile
+	modified:   drivers/bcma/bcma_private.h
+	modified:   drivers/bcma/driver_chipcommon.c
+	modified:   drivers/bcma/driver_chipcommon_pmu.c
+	modified:   drivers/bcma/driver_chipcommon_sflash.c
+	modified:   drivers/bcma/driver_gpio.c
+	modified:   drivers/bcma/driver_mips.c
+	modified:   drivers/bcma/driver_pci.c
+	modified:   drivers/bcma/driver_pci_host.c
+	modified:   drivers/bcma/driver_pcie2.c
+	modified:   drivers/bcma/host_pci.c
+	modified:   drivers/bcma/host_soc.c
+	modified:   drivers/bcma/main.c
+	modified:   drivers/bcma/scan.c
+	modified:   drivers/bcma/sprom.c
+	modified:   drivers/char/random.c
+	modified:   drivers/crypto/Kconfig
+	modified:   drivers/crypto/hifn_795x.c
+	modified:   drivers/dma-buf/Makefile
+	modified:   drivers/dma-buf/dma-buf.c
+	modified:   drivers/hwmon/Kconfig
+	modified:   drivers/hwmon/Makefile
+	modified:   drivers/leds/Makefile
+	modified:   drivers/leds/trigger/Kconfig
+	modified:   drivers/mmc/host/Kconfig
+	modified:   drivers/mmc/host/Makefile
+	modified:   drivers/mtd/Kconfig
+	modified:   drivers/mtd/Makefile
+	modified:   drivers/mtd/bcm47xxpart.c
+	modified:   drivers/mtd/chips/cfi_cmdset_0002.c
+	modified:   drivers/mtd/devices/block2mtd.c
+	modified:   drivers/mtd/mtdcore.c
+	modified:   drivers/mtd/mtdpart.c
+	modified:   drivers/mtd/nand/nand_ecc.c
+	modified:   drivers/mtd/nand/plat_nand.c
+	modified:   drivers/mtd/redboot.c
+	modified:   drivers/mtd/spi-nor/spi-nor.c
+	modified:   drivers/mtd/ubi/attach.c
+	modified:   drivers/mtd/ubi/block.c
+	modified:   drivers/mtd/ubi/build.c
+	modified:   drivers/mtd/ubi/ubi.h
+	modified:   drivers/net/Makefile
+	modified:   drivers/net/ethernet/broadcom/Kconfig
+	modified:   drivers/net/ethernet/broadcom/bgmac.c
+	modified:   drivers/net/ethernet/broadcom/bgmac.h
+	modified:   drivers/net/ethernet/intel/igb/igb_main.c
+	modified:   drivers/net/ethernet/realtek/8139cp.c
+	modified:   drivers/net/phy/Kconfig
+	modified:   drivers/net/phy/Makefile
+	modified:   drivers/net/phy/fixed.c
+	modified:   drivers/net/phy/mdio_bus.c
+	modified:   drivers/net/phy/phy.c
+	modified:   drivers/net/phy/phy_device.c
+	modified:   drivers/net/ppp/pppoe.c
+	modified:   drivers/net/ppp/pppox.c
+	modified:   drivers/net/usb/hso.c
+	modified:   drivers/net/wireless/b43/main.c
+	modified:   drivers/net/wireless/brcm80211/brcmsmac/main.c
+	modified:   drivers/net/wireless/hostap/hostap.h
+	modified:   drivers/net/wireless/hostap/hostap_ap.c
+	modified:   drivers/net/wireless/hostap/hostap_config.h
+	modified:   drivers/net/wireless/hostap/hostap_hw.c
+	modified:   drivers/net/wireless/hostap/hostap_info.c
+	modified:   drivers/net/wireless/hostap/hostap_ioctl.c
+	modified:   drivers/net/wireless/ti/Kconfig
+	modified:   drivers/of/fdt.c
+	modified:   drivers/of/of_net.c
+	modified:   drivers/pci/Kconfig
+	modified:   drivers/pci/quirks.c
+	modified:   drivers/rtc/Kconfig
+	modified:   drivers/rtc/Makefile
+	modified:   drivers/spi/Kconfig
+	modified:   drivers/spi/Makefile
+	modified:   drivers/spi/spi-gpio.c
+	modified:   drivers/spi/spi.c
+	modified:   drivers/ssb/Kconfig
+	modified:   drivers/ssb/driver_pcicore.c
+	modified:   drivers/ssb/main.c
+	modified:   drivers/ssb/pcihost_wrapper.c
+	modified:   drivers/tty/serial/8250/8250_core.c
+	modified:   drivers/tty/serial/8250/Kconfig
+	modified:   drivers/usb/core/usb.c
+	modified:   drivers/usb/dwc2/Kconfig
+	modified:   drivers/usb/dwc2/Makefile
+	modified:   drivers/usb/host/Kconfig
+	modified:   drivers/usb/host/ehci-hcd.c
+	modified:   drivers/usb/host/ehci-hub.c
+	modified:   drivers/usb/host/ehci-orion.c
+	modified:   drivers/usb/host/ehci-platform.c
+	modified:   drivers/usb/host/ehci.h
+	modified:   drivers/usb/host/pci-quirks.c
+	modified:   drivers/usb/host/pci-quirks.h
+	modified:   drivers/usb/storage/unusual_devs.h
+	modified:   drivers/watchdog/Kconfig
+	modified:   drivers/watchdog/Makefile
+	modified:   fs/Kconfig
+	modified:   fs/Makefile
+	modified:   fs/fcntl.c
+	modified:   fs/fuse/dev.c
+	modified:   fs/jffs2/Kconfig
+	modified:   fs/jffs2/Makefile
+	modified:   fs/jffs2/build.c
+	modified:   fs/jffs2/compr.c
+	modified:   fs/jffs2/compr.h
+	modified:   fs/jffs2/dir.c
+	modified:   fs/jffs2/scan.c
+	modified:   fs/jffs2/super.c
+	modified:   fs/locks.c
+	modified:   fs/open.c
+	modified:   fs/overlayfs/copy_up.c
+	modified:   fs/overlayfs/dir.c
+	modified:   fs/overlayfs/super.c
+	modified:   fs/proc/Kconfig
+	modified:   fs/proc/consoles.c
+	modified:   fs/proc/proc_tty.c
+	modified:   fs/squashfs/xz_wrapper.c
+	modified:   fs/ubifs/Kconfig
+	modified:   fs/ubifs/compress.c
+	modified:   fs/ubifs/file.c
+	modified:   fs/ubifs/journal.c
+	modified:   fs/ubifs/sb.c
+	modified:   fs/ubifs/ubifs-media.h
+	modified:   fs/ubifs/xattr.c
+	modified:   include/asm-generic/vmlinux.lds.h
+	modified:   include/linux/ath9k_platform.h
+	modified:   include/linux/bcma/bcma.h
+	modified:   include/linux/bcma/bcma_driver_chipcommon.h
+	modified:   include/linux/bcma/bcma_driver_gmac_cmn.h
+	modified:   include/linux/bcma/bcma_driver_mips.h
+	modified:   include/linux/bcma/bcma_driver_pci.h
+	modified:   include/linux/bcma/bcma_driver_pcie2.h
+	modified:   include/linux/bcma/bcma_regs.h
+	modified:   include/linux/bcma/bcma_soc.h
+	modified:   include/linux/export.h
+	modified:   include/linux/fs.h
+	modified:   include/linux/if_pppox.h
+	modified:   include/linux/kobject.h
+	modified:   include/linux/libata.h
+	modified:   include/linux/miscdevice.h
+	modified:   include/linux/module.h
+	modified:   include/linux/moduleloader.h
+	modified:   include/linux/moduleparam.h
+	modified:   include/linux/mtd/mtd.h
+	modified:   include/linux/mtd/nand.h
+	modified:   include/linux/mtd/partitions.h
+	modified:   include/linux/netdevice.h
+	modified:   include/linux/of_net.h
+	modified:   include/linux/phy.h
+	modified:   include/linux/platform_data/brcmfmac-sdio.h
+	modified:   include/linux/random.h
+	modified:   include/linux/regmap.h
+	modified:   include/linux/skbuff.h
+	modified:   include/linux/slab.h
+	modified:   include/linux/spi/spi.h
+	modified:   include/linux/ssb/ssb.h
+	modified:   include/linux/ssb/ssb_regs.h
+	modified:   include/linux/usb.h
+	modified:   include/linux/usb/ehci_pdriver.h
+	modified:   include/linux/usb/hcd.h
+	modified:   include/net/addrconf.h
+	modified:   include/net/ip6_tunnel.h
+	modified:   include/net/ip_fib.h
+	modified:   include/net/netfilter/nf_conntrack_extend.h
+	modified:   include/net/netns/ipv6.h
+	modified:   include/net/sch_generic.h
+	modified:   include/uapi/linux/Kbuild
+	modified:   include/uapi/linux/atm.h
+	modified:   include/uapi/linux/fib_rules.h
+	modified:   include/uapi/linux/icmpv6.h
+	modified:   include/uapi/linux/if_bridge.h
+	modified:   include/uapi/linux/if_packet.h
+	modified:   include/uapi/linux/if_tunnel.h
+	modified:   include/uapi/linux/jffs2.h
+	modified:   include/uapi/linux/netfilter/Kbuild
+	modified:   include/uapi/linux/netfilter_ipv4/ip_tables.h
+	modified:   include/uapi/linux/pkt_sched.h
+	modified:   include/uapi/linux/random.h
+	modified:   include/uapi/linux/rtnetlink.h
+	modified:   include/uapi/linux/seccomp.h
+	modified:   include/uapi/linux/spi/spidev.h
+	modified:   init/Kconfig
+	modified:   init/do_mounts.c
+	modified:   init/main.c
+	modified:   ipc/msg.c
+	modified:   ipc/sem.c
+	modified:   ipc/shm.c
+	modified:   ipc/util.c
+	modified:   kernel/Makefile
+	modified:   kernel/exec_domain.c
+	modified:   kernel/irq/proc.c
+	modified:   kernel/kallsyms.c
+	modified:   kernel/module.c
+	modified:   kernel/pid.c
+	modified:   kernel/sched/core.c
+	modified:   kernel/seccomp.c
+	modified:   kernel/time/timer_list.c
+	modified:   lib/Kconfig
+	modified:   lib/Makefile
+	modified:   lib/decompress.c
+	modified:   lib/decompress_unlzo.c
+	modified:   lib/kobject_uevent.c
+	modified:   lib/vsprintf.c
+	modified:   mm/bootmem.c
+	modified:   mm/memblock.c
+	modified:   mm/vmalloc.c
+	modified:   mm/vmstat.c
+	modified:   net/8021q/vlanproc.c
+	modified:   net/Kconfig
+	modified:   net/bridge/Kconfig
+	modified:   net/bridge/br_forward.c
+	modified:   net/bridge/br_input.c
+	modified:   net/bridge/br_mdb.c
+	modified:   net/bridge/br_multicast.c
+	modified:   net/bridge/br_private.h
+	modified:   net/bridge/br_sysfs_if.c
+	modified:   net/core/Makefile
+	modified:   net/core/dev.c
+	modified:   net/core/net-procfs.c
+	modified:   net/core/net_namespace.c
+	modified:   net/core/skbuff.c
+	modified:   net/core/sock.c
+	modified:   net/ethernet/eth.c
+	modified:   net/ipv4/Kconfig
+	modified:   net/ipv4/fib_frontend.c
+	modified:   net/ipv4/fib_lookup.h
+	modified:   net/ipv4/fib_rules.c
+	modified:   net/ipv4/fib_semantics.c
+	modified:   net/ipv4/fib_trie.c
+	modified:   net/ipv4/ipmr.c
+	modified:   net/ipv4/netfilter/ip_tables.c
+	modified:   net/ipv4/proc.c
+	modified:   net/ipv4/route.c
+	modified:   net/ipv6/Makefile
+	modified:   net/ipv6/addrconf.c
+	modified:   net/ipv6/fib6_rules.c
+	modified:   net/ipv6/ip6_output.c
+	modified:   net/ipv6/ip6_tunnel.c
+	modified:   net/ipv6/ip6mr.c
+	modified:   net/ipv6/route.c
+	modified:   net/netfilter/Kconfig
+	modified:   net/netfilter/Makefile
+	modified:   net/netfilter/nf_conntrack_proto_tcp.c
+	modified:   net/netfilter/nf_conntrack_standalone.c
+	modified:   net/netfilter/nf_nat_core.c
+	modified:   net/netlink/af_netlink.c
+	modified:   net/packet/af_packet.c
+	modified:   net/packet/internal.h
+	modified:   net/sched/Kconfig
+	modified:   net/sched/Makefile
+	modified:   net/sched/sch_api.c
+	modified:   net/sched/sch_codel.c
+	modified:   net/sched/sch_fifo.c
+	modified:   net/sched/sch_fq_codel.c
+	modified:   net/sched/sch_generic.c
+	modified:   net/sched/sch_mq.c
+	modified:   net/sched/sch_mqprio.c
+	modified:   net/unix/Kconfig
+	modified:   net/wireless/Kconfig
+	modified:   scripts/Makefile.build
+	modified:   scripts/Makefile.lib
+	modified:   scripts/gen_initramfs_list.sh
+	modified:   scripts/kallsyms.c
+	modified:   scripts/kconfig/Makefile
+	modified:   scripts/link-vmlinux.sh
+	modified:   scripts/mod/mk_elfconfig.c
+	modified:   scripts/mod/modpost.c
+	modified:   scripts/mod/modpost.h
+	modified:   scripts/setlocalversion
+	modified:   sound/core/Kconfig
+	modified:   tools/include/tools/be_byteshift.h
+	modified:   tools/include/tools/le_byteshift.h
+	modified:   usr/Makefile
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	Documentation/gpiommc.txt
+	Documentation/networking/adm6996.txt
+	arch/mips/fw/myloader/
+	arch/mips/include/asm/mach-ralink/rt305x_esw_platform.h
+	arch/mips/kernel/machine_kexec.h
+	arch/mips/lib/memcmp.c
+	crypto/ocf/
+	crypto/xz.c
+	drivers/hwmon/gsc.c
+	drivers/leds/ledtrig-morse.c
+	drivers/leds/ledtrig-netdev.c
+	drivers/leds/ledtrig-usbdev.c
+	drivers/mmc/host/gpiommc.c
+	drivers/mtd/mtdsplit/
+	drivers/mtd/myloader.c
+	drivers/net/ethernet/ralink/
+	drivers/net/phy/adm6996.c
+	drivers/net/phy/adm6996.h
+	drivers/net/phy/ar8216.c
+	drivers/net/phy/ar8216.h
+	drivers/net/phy/ar8327.c
+	drivers/net/phy/ar8327.h
+	drivers/net/phy/b53/
+	drivers/net/phy/ip17xx.c
+	drivers/net/phy/mdio-boardinfo.c
+	drivers/net/phy/mdio-boardinfo.h
+	drivers/net/phy/mvsw61xx.c
+	drivers/net/phy/mvsw61xx.h
+	drivers/net/phy/mvswitch.c
+	drivers/net/phy/mvswitch.h
+	drivers/net/phy/psb6970.c
+	drivers/net/phy/rtl8306.c
+	drivers/net/phy/rtl8366_smi.c
+	drivers/net/phy/rtl8366_smi.h
+	drivers/net/phy/rtl8366rb.c
+	drivers/net/phy/rtl8366s.c
+	drivers/net/phy/rtl8367.c
+	drivers/net/phy/rtl8367b.c
+	drivers/net/phy/swconfig.c
+	drivers/net/phy/swconfig_leds.c
+	drivers/rtc/rtc-pt7c4338.c
+	drivers/rtc/rtc-rtc7301.c
+	drivers/spi/spi_gpio_old.c
+	drivers/watchdog/old_gpio_wdt.c
+	fs/jffs2/compr_lzma.c
+	fs/yaffs2/
+	include/linux/ar8216_platform.h
+	include/linux/ath5k_platform.h
+	include/linux/bcm47xx_nvram.h
+	include/linux/crashlog.h
+	include/linux/decompress/unlzo_mm.h
+	include/linux/lzma.h
+	include/linux/lzma/
+	include/linux/mmc/gpiommc.h
+	include/linux/myloader.h
+	include/linux/old_gpio_wdt.h
+	include/linux/platform_data/adm6996-gpio.h
+	include/linux/platform_data/b53.h
+	include/linux/routerboot.h
+	include/linux/rt2x00_platform.h
+	include/linux/rtl8366.h
+	include/linux/rtl8367.h
+	include/linux/spi/spi_gpio_old.h
+	include/linux/switch.h
+	include/net/netfilter/nf_conntrack_rtcache.h
+	include/uapi/linux/netfilter/xt_id.h
+	include/uapi/linux/switch.h
+	kernel/crashlog.c
+	lib/lzma/
+	net/ipv6/inet6_stubs.c
+	net/netfilter/nf_conntrack_rtcache.c
+	net/netfilter/xt_id.c
+	net/sched/act_connmark.c
+	net/sched/sch_esfq.c
+	scripts/mod/elf.h
+	tools/include/tools/linux_types.h
+
+no changes added to commit (use "git add" and/or "git commit -a")
