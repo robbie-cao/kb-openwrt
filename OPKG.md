@@ -116,3 +116,5 @@ Force Options:
 
 ## Reference
 
+- https://wiki.openwrt.org/doc/packages
+- https://wiki.openwrt.org/doc/techref/opkg
