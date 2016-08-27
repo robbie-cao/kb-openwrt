@@ -10,6 +10,14 @@ The ubus is an interface that allows users to access and use services from the s
 
 > https://wiki.onion.io/Tutorials/OpenWRT%20Tutorials/UBUS_Tutorial/Part3_RPCD
 
+The heart of ubus is `ubusd` daemon. It provides interface for other daemons to register themselves as well as sending messages. For those curious, this interface is implemented using Unix socket and it uses TLV (type-length-value) messages.
+
+To simplify development of software using ubus (connecting to it) a library called libubus has been created.
+
+Every daemon registers set of own paths under specific namespace. Every path can provide multiple procedures with various amount of arguments. Procedures can reply with a message.
+
+> https://wiki.openwrt.org/doc/techref/ubus
+
 ## ubus vs dbus
 
 dbus is bloated, its C API is very annoying to use and requires writing large amounts of boilerplate code. In fact, the pure C API is so annoying that its own API documentation states: "If you use this low-level API directly, you're signing up for some pain."
