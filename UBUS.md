@@ -20,15 +20,7 @@ Every daemon registers set of own paths under specific namespace. Every path can
 
 > http://blog.csdn.net/jasonchen_gbd/article/details/45627967
 
-## ubus vs dbus
-
-dbus is bloated, its C API is very annoying to use and requires writing large amounts of boilerplate code. In fact, the pure C API is so annoying that its own API documentation states: "If you use this low-level API directly, you're signing up for some pain."
-
-ubus is tiny and has the advantage of being easy to use from regular C code, as well as automatically making all exported API functionality also available to shell scripts with no extra effort.
-
-> https://wiki.openwrt.org/doc/techref/netifd#what_s_the_difference_between_ubus_and_dbus
-
-## Arch
+## Architecture
 
 ![ubs arch](http://img.voidcn.com/vcimg/000/003/339/024_b25_d3e.jpg)
 
@@ -46,11 +38,38 @@ The Object paths are bindings can name object instances, and allow applications 
 
 In OpenWRT, the object path is namespace like `network.interface.lan`.
 
+Example:
+
+```
+# ubus list
+network
+network.device
+network.interface.lan
+network.interface.loopback
+network.interface.wan
+```
+
 ### Methods and Notifications
 
 Methods are operations that can be invoked on an object, with optional input parameters and output.
 
 Notifications are broadcasts from the object to any interested observers of the object. The notifications may contain a data payload.
+
+Example:
+
+```
+# ubus -v list network.interface.lan
+'network.interface.lan' @099f0c8b
+    "up": {  }
+    "down": {  }
+    "status": {  }
+    "prepare": {  }
+    "add_device": { "name": "String" }
+    "remove_device": { "name": "String" }
+    "notify_proto": {  }
+    "remove": {  }
+    "set_data": {  }
+```
 
 ### Calling a Method
 
@@ -72,6 +91,37 @@ The reply messages may be error messages, or may contain method returned data.
 6. The reply messages is transferred as ubus blob messages structure which is TLV (Type-Length-Value) based binary messages type.
 7. The process received the reply message should parse the message  and format  to human-nice message type as JSON or XML.
 
+Example:
+
+```
+# ubus call network.interface.wan status
+{
+    "up": true,
+    "pending": false,
+    "available": true,
+    "autostart": true,
+    "uptime": 86017,
+    "l3_device": "eth1",
+    "device": "eth1",
+    "address": [
+        {
+            "address": "178.25.65.236",
+            "mask": 21
+        }
+    ],
+    "route": [
+        {
+            "target": "0.0.0.0",
+            "mask": 0,
+            "nexthop": "178.25.71.254"
+        }
+    ],
+    "data": {
+
+    }
+}
+```
+
 ### Notify Notifications
 
 A notification in ubus consists of a single messages, send by one process to any number of other processes, which means the notification is a unidirectional broadcast, no need expected reply message.
@@ -86,9 +136,87 @@ The notification sender do not know the notifications recipients, it just send t
 4. The ubus daemon check the notification and determines which processes are  interested in it. Then send the notification to all of the interested processes.
 5. Each subscriber process receiving the notification decides what to do with the  notification message.
 
+```
+root@mylinkit:/# ubus list
+dhcp
+iwinfo
+log
+network
+network.device
+network.interface
+network.interface.lan
+network.interface.loopback
+network.interface.wan
+network.wireless
+rpc-sys
+service
+session
+system
+uci
+root@mylinkit:/# ubus -v list network.wireless
+'network.wireless' @5b7f5ca6
+        "up":{}
+        "down":{}
+        "status":{}
+        "notify":{}
+        "get_validate":{}
+root@mylinkit:/# ubus listen &
+root@mylinkit:/# ubus call network.wireless down
+root@mylinkit:/# [ 5143.150000] br-lan: port 2(ra0) entered disabled state
+{ "network.interface": {"action":"ifdown","interface":"wan"} }
+{ "network.interface": {"action":"ifdown","interface":"wan"} }
+{ "network.interface": {"action":"ifdown","interface":"wan"} }
+[ 5143.840000] device ra0 left promiscuous mode
+[ 5143.840000] br-lan: port 2(ra0) entered disabled state
+[ 5149.510000] efuse_probe: efuse = 10000012
+[ 5149.680000] tssi_0_target_pwr_g_band = 32
+[ 5149.690000] tssi_1_target_pwr_g_band = 35
+[ 5154.810000] <==== rt28xx_init, Status=0
+root@mylinkit:/# ubus call network.wireless up
+root@mylinkit:/#
+[ 5196.330000] device ra0 entered promiscuous mode
+[ 5196.340000] br-lan: port 2(ra0) entered forwarding state
+[ 5196.340000] br-lan: port 2(ra0) entered forwarding state
+[ 5198.340000] br-lan: port 2(ra0) entered forwarding state
+{ "network.interface": {"action":"ifup","interface":"wan"} }
+{ "network.interface": {"action":"ifup","interface":"wan"} }
+{ "network.interface": {"action":"ifup","interface":"wan"} }
+```
+
 > http://wenku.baidu.com/link?url=ESfsT9jXUG6CtGcHJD6VmqiXUvqNMFKKh4d0zIEcc4z96yTPuZjvA-yRq0sptwZdicYkyfvUcDMkClnxEaRwCLiTfn_MiFLfJMjkM-0Fr1C
 
-## Unix/Linux IPC
+## `ubus` cli
+
+```
+# ubus
+Usage: ubus [<options>] <command> [arguments...]
+Options:
+ -s <socket>:           Set the unix domain socket to connect to
+ -t <timeout>:          Set the timeout (in seconds) for a command to complete
+ -S:                    Use simplified output (for scripts)
+ -v:                    More verbose output
+
+Commands:
+ - list [<path>]                        List objects
+ - call <path> <method> [<message>]     Call an object method
+ - listen [<path>...]                   Listen for events
+ - send <type> [<message>]              Send an event
+ - wait_for <object> [<object>...]      Wait for multiple objects to appear on ubus
+
+```
+
+
+## More
+
+### ubus vs dbus
+
+dbus is bloated, its C API is very annoying to use and requires writing large amounts of boilerplate code. In fact, the pure C API is so annoying that its own API documentation states: "If you use this low-level API directly, you're signing up for some pain."
+
+ubus is tiny and has the advantage of being easy to use from regular C code, as well as automatically making all exported API functionality also available to shell scripts with no extra effort.
+
+> https://wiki.openwrt.org/doc/techref/netifd#what_s_the_difference_between_ubus_and_dbus
+
+### Unix/Linux IPC
 
 The Linux kernel provides the following IPC mechanisms: Signals, Anonymous Pipes, Named Pipes or FIFOs, SysV Message Queues, POSIX Message Queues, SysV Shared memory, POSIX Shared memory, SysV semaphores, POSIX semaphores, FUTEX locks, File-backed and anonymous shared memory using mmap, UNIX Domain Sockets, Netlink Sockets, Network Sockets, Inotify mechanisms, FUSE subsystem, D-Bus subsystem.
 
