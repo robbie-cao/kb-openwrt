@@ -18,6 +18,8 @@ Every daemon registers set of own paths under specific namespace. Every path can
 
 > https://wiki.openwrt.org/doc/techref/ubus
 
+> http://blog.csdn.net/jasonchen_gbd/article/details/45627967
+
 ## ubus vs dbus
 
 dbus is bloated, its C API is very annoying to use and requires writing large amounts of boilerplate code. In fact, the pure C API is so annoying that its own API documentation states: "If you use this low-level API directly, you're signing up for some pain."
@@ -38,7 +40,53 @@ ubus is tiny and has the advantage of being easy to use from regular C code, as 
 
 ## Use
 
-> http://blog.csdn.net/jasonchen_gbd/article/details/45627967
+### Objects and Object Paths
+
+The Object paths are bindings can name object instances, and allow applications to refer to them.
+
+In OpenWRT, the object path is namespace like `network.interface.lan`.
+
+### Methods and Notifications
+
+Methods are operations that can be invoked on an object, with optional input parameters and output.
+
+Notifications are broadcasts from the object to any interested observers of the object. The notifications may contain a data payload.
+
+### Calling a Method
+
+A method call in ubus consists of two messages;  A call messages from process A to process B and the reply messages from process B to process A.
+
+The send message and reply messages are both routed through the ubus daemon.
+
+The call message contains the method arguments.
+
+The reply messages may be error messages, or may contain method returned data.
+
+**Call Process**
+
+1. The call method messages contains the ubus connection context, the destination object id, the method name, the method arguments.
+2. The method call message is send to the ubus daemon.
+3. The ubus daemon lookup the destination object id, if a process owns the object instance, then the daemon will forward the method call to the find process. Otherwise the ubus daemon creates an error messages and sends the error message back to the message call as reply.
+4. The receiving process will parse the ubus object messages, and find the call method and arguments belong to the method. Then match the object methods in object instance, if find matched method, will invoke the method and then send the reply messages.
+5. Ubus daemon receive the reply message and forward the reply message to the process that made the method call.
+6. The reply messages is transferred as ubus blob messages structure which is TLV (Type-Length-Value) based binary messages type.
+7. The process received the reply message should parse the message  and format  to human-nice message type as JSON or XML.
+
+### Notify Notifications
+
+A notification in ubus consists of a single messages, send by one process to any number of other processes, which means the notification is a unidirectional broadcast, no need expected reply message.
+
+The notification sender do not know the notifications recipients, it just send the  notification onto bus  The interest recipients should subscribe the sender object with the bus daemon.
+
+**Notification Process**
+
+1. Add notification object onto ubus daemon.
+2. The notification message contains ubus connection context, the notification sender object ID, the notification type and optional arguments with the type.
+3. Any process on the ubus can subscribe the notification object. The bus may has a list  of subscribers, which will match the observers when daemon handle the notification message.
+4. The ubus daemon check the notification and determines which processes are  interested in it. Then send the notification to all of the interested processes.
+5. Each subscriber process receiving the notification decides what to do with the  notification message.
+
+> http://wenku.baidu.com/link?url=ESfsT9jXUG6CtGcHJD6VmqiXUvqNMFKKh4d0zIEcc4z96yTPuZjvA-yRq0sptwZdicYkyfvUcDMkClnxEaRwCLiTfn_MiFLfJMjkM-0Fr1C
 
 ## Unix/Linux IPC
 
