@@ -1955,6 +1955,12 @@ Some packages also depend on OpenWrt kernel patches, like `iptables`.
 
 > http://openwrt-devel.openwrt.narkive.com/9ak1CBMO/integrate-kernel-git-repo-in-openwrt-environment
 
+## BKM
+
+### Online Source Cross Reference
+
+[OpenWrt.org Cross Reference](http://lxr.mein.io)
+
 ## Resources
 
 - [OpenWrt Wiki](https://wiki.openwrt.org)
