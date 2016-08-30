@@ -1,31 +1,4 @@
-# Update Patches with `quilt`
-
-## Usage
-
-```
-Usage: quilt [--trace[=verbose]] [--quiltrc=XX] command [-h] ...
-       quilt --version
-Commands are:
-        add       fold    new       remove    top
-        annotate  fork    next      rename    unapplied
-        applied   graph   patches   revert    upgrade
-        delete    grep    pop       series
-        diff      header  previous  setup
-        edit      import  push      shell
-        files     mail    refresh   snapshot
-```
-
-## Config
-
-`.quiltrc`
-
-```
-QUILT_DIFF_ARGS="--no-timestamps --no-index -p ab --color=auto"
-QUILT_REFRESH_ARGS="--no-timestamps --no-index -p ab"
-QUILT_PATCH_OPTS="--unified"
-QUILT_DIFF_OPTS="-p"
-EDITOR="vim"
-```
+# Patches with `quilt`
 
 ## Basic Concepts and Operation
 
@@ -47,6 +20,33 @@ work/ -+- ...
                 |- patch1.diff/ -+- ...
                 |- patch2.diff/ -+- ...
                 +- ...
+```
+
+## Usage
+
+```
+Usage: quilt [--trace[=verbose]] [--quiltrc=XX] command [-h] ...
+quilt --version
+Commands are:
+add       fold    new       remove    top
+annotate  fork    next      rename    unapplied
+applied   graph   patches   revert    upgrade
+delete    grep    pop       series
+diff      header  previous  setup
+edit      import  push      shell
+files     mail    refresh   snapshot
+```
+
+## Config
+
+`.quiltrc`
+
+```
+QUILT_DIFF_ARGS="--no-timestamps --no-index -p ab --color=auto"
+QUILT_REFRESH_ARGS="--no-timestamps --no-index -p ab"
+QUILT_PATCH_OPTS="--unified"
+QUILT_DIFF_OPTS="-p"
+EDITOR="vim"
 ```
 
 ## Use Case
