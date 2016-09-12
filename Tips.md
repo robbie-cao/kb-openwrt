@@ -51,6 +51,24 @@ wireless.sta.disabled='1'
 
 > https://wiki.openwrt.org/doc/uci
 
+## Control GPIO/LED in Command Line
+
+The following script export IO16 as *out* and toggle LED on it.
+
+```
+#!/bin/ash
+
+echo 16 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio16/direction
+
+while true;
+do
+        echo 1 > /sys/class/gpio/gpio16/value;
+        sleep 1;
+        echo 0 > /sys/class/gpio/gpio16/value;
+done
+```
+
 
 ## Reference
 
