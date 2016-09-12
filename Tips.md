@@ -1,5 +1,15 @@
 # Tips
 
+## Redirect Log to Console
+
+```
+-> In script
+echo "Messages you want to output" > /dev/console
+
+-> Log trace (by printf / fprintf(stdout/stderr, ...) of program running in background
+program 2>&1 > /dev/console
+```
+
 ## MT7688 Pin Mux
 
 ```
