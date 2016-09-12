@@ -69,6 +69,34 @@ do
 done
 ```
 
+## Set Headphone / Speaker Volume
+
+```
+# amixer -c 0 sset Headphone,0 120
+Simple mixer control 'Headphone',0
+Capabilities: pvolume
+Playback channels: Front Left - Front Right
+Limits: Playback 0 - 127
+Mono:
+Front Left: Playback 120 [94%] [-1.00dB]
+Front Right: Playback 120 [94%] [-1.00dB]
+
+-or-
+
+# amixer sset 'Headphone',0 80%
+Simple mixer control 'Headphone',0
+Capabilities: pvolume
+Playback channels: Front Left - Front Right
+Limits: Playback 0 - 127
+Mono:
+Front Left: Playback 102 [80%] [-19.00dB]
+Front Right: Playback 102 [80%] [-19.00dB]
+```
+
+Replace **'Headphone'** with **Speaker** to set speaker volume.
+
+More details refer to https://github.com/robbie-cao/kb-audio/blob/master/amixer.md#steps
+
 
 ## Reference
 
