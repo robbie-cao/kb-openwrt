@@ -107,6 +107,33 @@ Replace **'Headphone'** with **Speaker** to set speaker volume.
 
 More details refer to https://github.com/robbie-cao/kb-audio/blob/master/amixer.md#steps
 
+## Timer with `uloop`
+
+```
+#include "uloop.h"
+
+truct uloop_timeout something_timeout;
+
+
+static void something_timeout_handler(struct uloop_timeout *t)
+{
+    // ...
+    // operations
+    // ...
+
+    // Reset timeout to be a repeat timer
+    // Not needed for oneshot timeout handler
+    uloop_timeout_set(t, LED_FLASH_INTERVAL);
+}
+
+void some_func()
+{
+    // ...
+    something_timeout.cb = something_flash_handler;
+    uloop_timeout_set(&something_timeout, LED_FLASH_INTERVAL);
+    // ...
+}
+```
 
 ## Reference
 
