@@ -222,6 +222,52 @@ hotplug.json 中有描述, 如果 uevent 中含有 BUTTON 字符串, 而且 SUBS
 
 > http://www.cnblogs.com/sammei/p/4119659.html
 
+## GPIO
+
+### Init Script for Configuring GPIO
+
+```
+/etc/init.d/gpio
+
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2006 OpenWrt.org
+
+START=20
+boot() {
+    [ -d /sys/class/gpio ] && {
+        # Custom GPIO Configuration:
+        # GW2382 - steer USB from FP to PCIe:
+        echo 0 > /sys/class/gpio/gpio10/value
+    }
+}
+```
+
+### 'gpio-button-hotplug` Driver
+
+OpenWrt based BSP's use `procd` as PID1. One of `procd`'s features is to catch messages from the kernel and act upon them, much in the way a conventional linux system uses a hotplug helper and udev.
+The `/etc/hotplug.json` file configures how various events are handled:
+
+- using makedev to create device nodes in /dev on 'add' events and removing the nodes on 'remove' events
+- facilitate firmware loading
+- calling `/sbin/hotplug-call` on platform subsystem events
+- calling `/etc/rc.button/$BUTTON` on button events
+- calling `/sbin/hotplug-call` on various subsystem events (such as net, input, usb, block, atm, tty, button)
+
+Button events:
+
+- `/sbin/hotplug-call` will have the following defined:
+  - `BUTTON` - button name
+  - `ACTION` - pressed|released
+  - `SEQNUM` - a numeric value that increments with the event message
+  - `SEEN`   - number of seconds since last button event from driver
+
+    this can be used to determine how long a button has been 'held' for 'released' events. If a button is released and `SEEN=8` it has been held for 8 seconds
+
+The `gpio-button-hotplug` driver is the Linux kernel driver that creates hotplug events for GPIO based buttons.
+The `gpio-button-hotplug` out-of-tree driver is an OpenWrt custom driver that takes the place of the in-kernel `gpio-keys` (`KEYBOARD_GPIO`) and `gpio_keys_polled` (`KEYBOARD_GPIO_POLLED`) drivers and instead of emiting linux input events it emits uevent messages to the button subsystem which tie into the OpenWrt hotplug daemon.
+
+## LED
+
 ## Reference
 
 - https://wiki.openwrt.org/doc/packages
