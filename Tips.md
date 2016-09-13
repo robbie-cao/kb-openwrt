@@ -184,6 +184,44 @@ Script full source located at `/etc/rc.button/wps`, refer to: https://github.com
 export DBGLVL=10; procd -h /etc/hotplug.json
 ```
 
+## 按键 Button 的检测
+
+OpenWrt 中, `procd` 作为 init 进程会处理许多事情, 其中包括了 hotplug, 按键的检测就是通过 hotplug 来实现的。
+
+它首先写了一个内核模块: `gpio_button_hotplug`, 用于监听按键, 有中断和 poll 两种方式. 然后在发出事件的同时, 将记录并计算得出的两次按键时间差也作为 uevent 变量发出来.
+
+这样在用户空间收到这个 uevent 事件时就知道该次按键按下了多长时间.
+
+hotplug.json 中有描述, 如果 uevent 中含有 BUTTON 字符串, 而且 SUBSYSTEM 为 "button", 则执行 /etc/rc.button/ 下的 %BUTTON% 脚本来处理.
+
+```
+        [ "if",
+                [ "and",
+                        [ "has", "BUTTON" ],
+                        [ "eq", "SUBSYSTEM", "button" ],
+                ],
+                [ "exec", "/etc/rc.button/%BUTTON%" ]
+        ],
+```
+
+## Hotplug
+
+由内核发出 event 事件
+
+1. `kobject_uevent()` 产生 uevent 事件(`lib/kobject_uevent.c` 中), 产生的 uevent 先由 `netlink_broadcast_filtered()` 发出, 最后调用 `uevent_helper[]` 所指定的程序来处理.
+2. `uevent_helper[]` 里默认指定 `/sbin/hotplug`, 但可以通过 `/sys/kernel/uevent_helper` (`kernel/ksysfs.c`) 或 `/proc/kernel/uevent_helper` (`kernel/sysctl.c`) 来修改成指定的程序.
+3. **在 OpenWrt 并不使用 `user_helper[]` 指定程序来处理 uevent (`/sbin/hotplug` 不存在), 而是使用 `PF_NETLINK` 来获取来自内核的 uevent.**
+
+用户空间监听 uevent
+
+`procd/plug/hotplug.c` 中, 创建一个 `PF_NETLINK` 套接字来监听内核 `netlink_broadcast_filtered()` 发出的 uevent.
+
+收到 uevent 之后, 再根据 `/etc/hotplug.json` 里的描述来处理.
+
+通常情况下, `/etc/hotplug.json` 会调用 `/sbin/hotplug-call` 来处理, 它根据 uevent 的 `$SUBSYSTEM` 变量来分别调用 `/etc/hotplug.d/` 下不同目录中的脚本.
+
+> http://www.cnblogs.com/sammei/p/4119659.html
+
 ## Reference
 
 - https://wiki.openwrt.org/doc/packages
