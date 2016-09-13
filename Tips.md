@@ -135,6 +135,55 @@ void some_func()
 }
 ```
 
+## WPS Button on MT7688
+
+**Long press 5s to reset WiFi back to STA mode**
+
+```
+# wifi reset (back to ap mode)
+elif [ "$SEEN" -gt 5 ]
+then
+        sta_disabled="$(uci get wireless.sta.disabled)"
+        if [ ! "$sta_disabled" = 1 ]; then
+                echo none > /sys/class/leds/mediatek\:orange\:wifi/trigger
+                echo 1 > /sys/class/leds/mediatek\:orange\:wifi/brightness
+                sleep 1
+                echo "START WIFI AP" > /dev/console
+                uci set wireless.sta.disabled=1
+                uci commit wireless
+                wifi
+        fi
+```
+
+**Long press 20s for factory reset**
+
+```
+# factory reset
+if [ "$SEEN" -gt 20 ]
+then
+        [ -f /tmp/.factory_reset ] && return
+        echo timer > /sys/class/leds/mediatek\:orange\:wifi/trigger
+        echo 100 > /sys/class/leds/mediatek\:orange\:wifi/delay_on
+        echo 100 > /sys/class/leds/mediatek\:orange\:wifi/delay_off
+        touch /tmp/.factory_reset
+        echo "FACTORY RESET" > /dev/console
+        jffs2reset -y
+        sync
+        reboot
+```
+
+Script full source located at `/etc/rc.button/wps`, refer to: https://github.com/robbie-cao/mua-mtk-lks7688-feed/blob/master/mtk-linkit/files/etc/rc.button/wps
+
+> https://wiki.openwrt.org/doc/howto/hardware.button
+
+> http://www.cnblogs.com/sammei/p/4119659.html
+
+## 用户空间监听 uevent
+
+```
+export DBGLVL=10; procd -h /etc/hotplug.json
+```
+
 ## Reference
 
 - https://wiki.openwrt.org/doc/packages
