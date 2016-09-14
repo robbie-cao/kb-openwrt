@@ -47,6 +47,23 @@ Group ephy - ephy [gpio]    --> ephy pin work as gpio
 Group wled - [wled] gpio
 ```
 
+You can get detailed pin information from debugfs.
+
+```
+root@mua:~# ls -l /sys/kernel/debug/pinctrl/
+drwxr-xr-x    2 root     root             0 Jan  1  1970 pinctrl
+-r--r--r--    1 root     root             0 Jan  1  1970 pinctrl-devices
+-r--r--r--    1 root     root             0 Jan  1  1970 pinctrl-handles
+-r--r--r--    1 root     root             0 Jan  1  1970 pinctrl-maps
+
+root@mua:~# ls -l /sys/kernel/debug/pinctrl/pinctrl/
+-r--r--r--    1 root     root             0 Jan  1  1970 gpio-ranges
+-r--r--r--    1 root     root             0 Jan  1  1970 pingroups
+-r--r--r--    1 root     root             0 Jan  1  1970 pinmux-functions
+-r--r--r--    1 root     root             0 Jan  1  1970 pinmux-pins
+-r--r--r--    1 root     root             0 Jan  1  1970 pins
+```
+
 ## WiFi Config STA -> AP
 
 ```
