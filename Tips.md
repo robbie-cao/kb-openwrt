@@ -96,6 +96,31 @@ do
 done
 ```
 
+## UART / Serial
+
+There are three serial port on MT7688:
+
+```
+/dev/ttyS0  -> UART0
+/dev/ttyS1  -> UART1
+/dev/ttyS2  -> UART2
+```
+
+`/dev/console` is using `/dev/ttyS0`.
+
+Echo back on UART1:
+
+```
+$ cat /dev/ttyS1 | tee /dev/ttyS1
+```
+
+Redirect input from UART1 to UART0 (console):
+
+```
+$ cat /dev/ttyS1 > /dev/console
+```
+
+
 ## Set Headphone / Speaker Volume
 
 ```
