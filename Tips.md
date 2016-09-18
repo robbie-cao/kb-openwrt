@@ -1,5 +1,33 @@
 # Tips
 
+## Upgrade without `tftp`
+
+```
+1. Config target to STA mode
+# vi /etc/config/wireless
+config wifi-iface 'sta'
+        option device 'radio0'
+        option mode 'sta'
+        option network 'wan'
+        option ifname 'apcli0'
+        option led 'mediatek:orange:wifi'
+        option ssid 'MUA'        --> ssid
+        option key 'xxxxxxxx'	 --> key
+        option encryption 'psk2' --> psk2
+        option disabled '0'      --> disabled -> 0
+# wifi                           -> restart wifi
+# ifconfig | grep 192            -> check ip address, eg 192.168.1.71
+
+2. Copy upgrade image to target
+$ scp bin/ramips/openwrt-ramips-mt7688-LinkIt7688-squashfs-sysupgrade.bin root@192.168.1.71:/tmp
+
+3. Upgrade
+   a) save config and restore after upgrade
+      # sysupgrade -v /tmp/openwrt-ramips-mt7688-LinkIt7688-squashfs-sysupgrade.bin
+   b) total fresh upgrade
+      # mtd -r write /tmp/openwrt-ramips-mt7688-LinkIt7688-squashfs-sysupgrade.bin firmware
+```
+
 ## Redirect Log to Console
 
 ```
