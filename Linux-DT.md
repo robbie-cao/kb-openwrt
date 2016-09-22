@@ -1,8 +1,4 @@
----
-layout: post
-title: Device Tree
-categories: linux
----
+# Linux Device Tree
 
 ## Introduction
 
@@ -99,6 +95,24 @@ Examples:
 ## Device Tree Structure
 
 ![Device Tree Structure](http://ece-research.unm.edu/jimp/codesign/ZED/Summary_of_the_Device_Tree.png)
+
+## DTS Syntax
+
+### Basic
+
+![](images/dts-basic-syntax.png)
+
+### Example
+
+![](images/dts-sample.png)
+
+![](images/dts-sample-driver-side.png)
+
+> http://free-electrons.com/pub/conferences/2013/elce/petazzoni-device-tree-dummies/petazzoni-device-tree-dummies.pdf
+
+### Format
+
+> https://github.com/vagrantc/device-tree-compiler/blob/master/Documentation/dts-format.txt
 
 ## Misc
 
