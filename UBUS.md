@@ -214,7 +214,7 @@ dbus is bloated, its C API is very annoying to use and requires writing large am
 
 ubus is tiny and has the advantage of being easy to use from regular C code, as well as automatically making all exported API functionality also available to shell scripts with no extra effort.
 
-> https://wiki.openwrt.org/doc/techref/netifd#what_s_the_difference_between_ubus_and_dbus
+> https://openwrt.org/docs/techref/architecture#what_s_the_difference_between_ubus_and_dbus
 
 ### Unix/Linux IPC
 
